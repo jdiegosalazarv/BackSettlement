@@ -2,7 +2,13 @@ package co.com.ias.settlement.domain.model.gateways.employee;
 
 import co.com.ias.settlement.domain.model.employee.Employee;
 
-public interface IEmployeeSaveRepository {
+import java.util.List;
+
+public interface IEmployeeRepository {
 
     Employee saveEmployee(Employee employee);
+
+    Employee findEmployeeById(String id);
+
+    List<Employee> findEmployees();
 }
