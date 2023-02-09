@@ -1,9 +1,7 @@
 package co.com.ias.settlement.infrastructure.entrypoints.employee;
 
 import co.com.ias.settlement.domain.model.employee.Employee;
-import co.com.ias.settlement.domain.model.employeestate.EmployeeState;
 import co.com.ias.settlement.domain.usecase.employee.EmployeeUseCase;
-import co.com.ias.settlement.domain.usecase.employeestate.EmployeeStateUseCase;
 import co.com.ias.settlement.infrastructure.entrypoints.employee.dto.EmployeeDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +16,14 @@ import java.util.stream.Collectors;
 public class EmployeeEntryPoint {
     private final EmployeeUseCase employeeSaveUseCase;
 
-    private final EmployeeStateUseCase employeeStateUseCase;
+//    private final EmployeeStateUseCase employeeStateUseCase;
 
     @PostMapping
     public ResponseEntity<?> saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
         try {
-            EmployeeState employeeState =
-                    this.employeeStateUseCase.findByIdEmployeeState(1);
-            Employee employee = EmployeeDTO.toDomain(employeeDTO, employeeState);
+//            EmployeeState employeeState =
+//                    this.employeeStateUseCase.findByIdEmployeeState(1);
+            Employee employee = EmployeeDTO.toDomain(employeeDTO);
             EmployeeDTO employeeDTO1 = EmployeeDTO.fromDomain(this.employeeSaveUseCase.saveEmployee(employee));
             return ResponseEntity.status(201).body(employeeDTO1);
         } catch (IllegalArgumentException | NullPointerException e) {
