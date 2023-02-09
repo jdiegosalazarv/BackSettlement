@@ -1,9 +1,8 @@
 package co.com.ias.settlement.domain.model.employee;
 
+import co.com.ias.settlement.domain.model.employeestate.EmployeeState;
+
 public class Employee {
-
-    private final IdEmployee id;
-
     private final IdentificationId identificationId;
 
     private final EmployeeName name;
@@ -14,17 +13,19 @@ public class Employee {
 
     private final Salary salary;
 
-    public Employee(IdEmployee id, IdentificationId identificationId, EmployeeName name, ContractStartDate date, EmployeePosition employeePosition, Salary salary) {
-        this.id = id;
+    private final UpdateDate updateDate;
+
+    private final EmployeeState employeeState;
+
+    public Employee(IdentificationId identificationId, EmployeeName name, ContractStartDate date,
+                    EmployeePosition employeePosition, Salary salary, UpdateDate updateDate, EmployeeState employeeState) {
         this.identificationId = identificationId;
         this.name = name;
         this.date = date;
         this.employeePosition = employeePosition;
         this.salary = salary;
-    }
-
-    public IdEmployee getId() {
-        return id;
+        this.updateDate = updateDate;
+        this.employeeState = employeeState;
     }
 
     public IdentificationId getIdentificationId() {
@@ -45,5 +46,13 @@ public class Employee {
 
     public Salary getSalary() {
         return salary;
+    }
+
+    public UpdateDate getUpdateDate() {
+        return updateDate;
+    }
+
+    public EmployeeState getEmployeeState() {
+        return employeeState;
     }
 }
