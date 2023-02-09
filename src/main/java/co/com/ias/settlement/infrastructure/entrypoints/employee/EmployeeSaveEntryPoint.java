@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/employee")
 @AllArgsConstructor
 public class EmployeeSaveEntryPoint {
-
 //    private final EmployeeSaveUseCase employeeSaveUseCase;
+//
+//    @PostMapping
+//    public ResponseEntity<?> saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
+//        return ResponseEntity.status(200).body("");
+//    }
 
 
 }
