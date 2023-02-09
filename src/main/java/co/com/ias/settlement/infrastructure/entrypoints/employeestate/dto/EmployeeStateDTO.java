@@ -16,6 +16,10 @@ public class EmployeeStateDTO {
     private Integer id;
     private String stateName;
 
+    public EmployeeStateDTO(Integer id) {
+        this.id = id;
+    }
+
     public static EmployeeState toDomain(EmployeeStateDTO employeeStateDTO) {
         return new EmployeeState(
                 new StateId(employeeStateDTO.getId()),

@@ -19,12 +19,8 @@ public class EmployeeStateSaveEntryPoint {
 
     @PostMapping
     public ResponseEntity<?> saveEmployeeState(@RequestBody EmployeeStateDTO employeeStateDTO) {
-        try {
-            EmployeeState employeeState = EmployeeStateDTO.toDomain(employeeStateDTO);
-            EmployeeState employeeState1 = this.employeeStateSaveUseCase.saveEmployeeState(employeeState);
-            return ResponseEntity.status(201).body(EmployeeStateDTO.fromDomain(employeeState1));
-        } catch (IllegalArgumentException | NullPointerException e) {
-            return ResponseEntity.status(500).body(e.getMessage());
-        }
+        EmployeeState employeeState = EmployeeStateDTO.toDomain(employeeStateDTO);
+        EmployeeState employeeState1 = this.employeeStateSaveUseCase.saveEmployeeState(employeeState);
+        return ResponseEntity.status(201).body(EmployeeStateDTO.fromDomain(employeeState1));
     }
 }

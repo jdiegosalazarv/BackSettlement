@@ -22,7 +22,8 @@ public class EmployeeSaveEntryPoint {
     @PostMapping
     public ResponseEntity<?> saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
         try {
-            EmployeeState employeeState = this.employeeStateFindByIdUseCase.findByIdEmployeeState(employeeDTO.getEmployeeState());
+            EmployeeState employeeState =
+                    this.employeeStateFindByIdUseCase.findByIdEmployeeState(1);
             Employee employee = EmployeeDTO.toDomain(employeeDTO, employeeState);
             EmployeeDTO employeeDTO1 = EmployeeDTO.fromDomain(this.employeeSaveUseCase.saveEmployee(employee));
             return ResponseEntity.status(201).body(employeeDTO1);
