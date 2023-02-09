@@ -19,11 +19,7 @@ public class EmployeeStateFindByIdEntryPoint {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> finByIdEmployeeState(@PathVariable Integer id) {
-        try {
-            EmployeeState employeeState = this.employeeStateFindByIdUseCase.findByIdEmployeeState(id);
-            return ResponseEntity.status(200).body(EmployeeStateDTO.fromDomain(employeeState));
-        } catch (NullPointerException e) {
-            return ResponseEntity.status(400).body(e.getMessage());
-        }
+        EmployeeState employeeState = this.employeeStateFindByIdUseCase.findByIdEmployeeState(id);
+        return ResponseEntity.status(200).body(EmployeeStateDTO.fromDomain(employeeState));
     }
 }
