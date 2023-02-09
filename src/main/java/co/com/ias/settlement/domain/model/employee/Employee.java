@@ -7,7 +7,7 @@ public class Employee {
 
     private final EmployeeName name;
 
-    private final ContractStartDate date;
+    private final ContractStartDate contractStartDate;
 
     private final EmployeePosition employeePosition;
 
@@ -21,7 +21,7 @@ public class Employee {
                     EmployeePosition employeePosition, Salary salary, UpdateDate updateDate, EmployeeState employeeState) {
         this.identificationId = identificationId;
         this.name = name;
-        this.date = date;
+        this.contractStartDate = date;
         this.employeePosition = employeePosition;
         this.salary = salary;
         this.updateDate = updateDate;
@@ -36,8 +36,8 @@ public class Employee {
         return name;
     }
 
-    public ContractStartDate getDate() {
-        return date;
+    public ContractStartDate getContractStartDate() {
+        return contractStartDate;
     }
 
     public EmployeePosition getEmployeePosition() {
@@ -55,4 +55,6 @@ public class Employee {
     public EmployeeState getEmployeeState() {
         return employeeState;
     }
+
+
 }

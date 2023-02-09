@@ -1,4 +1,4 @@
-package co.com.ias.settlement.infrastructure.adapters;
+package co.com.ias.settlement.infrastructure.adapters.employeestate;
 
 import co.com.ias.settlement.domain.model.employeestate.EmployeeState;
 import co.com.ias.settlement.domain.model.gateways.employeestate.IEmployeeStateSaveRepository;
