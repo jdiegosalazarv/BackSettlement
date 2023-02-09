@@ -1,5 +1,9 @@
 package co.com.ias.settlement.infrastructure.adapters.jpa.entity.dbo;
 
+import co.com.ias.settlement.domain.model.employee.*;
+import co.com.ias.settlement.domain.model.employeestate.EmployeeState;
+import co.com.ias.settlement.domain.model.employeestate.StateId;
+import co.com.ias.settlement.domain.model.employeestate.StateName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +20,7 @@ import java.time.LocalDate;
 @Setter
 public class EmployeeDBO {
     @Id
-    private Integer identificationId;
+    private String identificationId;
 
     private String employeeName;
 
@@ -32,5 +36,34 @@ public class EmployeeDBO {
     @JoinColumn(name = "employee_state_id", referencedColumnName = "id")
     private EmployeeStateDBO employeeState;
 
+    public static Employee toDomain(EmployeeDBO employeeDBO) {
+        return new Employee(
+                new IdentificationId(employeeDBO.getIdentificationId()),
+                new EmployeeName(employeeDBO.getEmployeeName()),
+                new ContractStartDate(employeeDBO.getContractStartDate()),
+                new EmployeePosition(employeeDBO.getEmployeePosition()),
+                new Salary(employeeDBO.getSalary()),
+                new UpdateDate(employeeDBO.getUpdateDate()),
+                new EmployeeState(
+                        new StateId(employeeDBO.getEmployeeState().getId()),
+                        new StateName(employeeDBO.getEmployeeState().getStateName())
+                )
+        );
+    }
+
+    public static EmployeeDBO fromDomain(Employee employee) {
+        return new EmployeeDBO(
+                employee.getIdentificationId().getValue(),
+                employee.getName().getValue(),
+                employee.getContractStartDate().getValue(),
+                employee.getEmployeePosition().getValue(),
+                employee.getSalary().getValue(),
+                employee.getUpdateDate().getValue(),
+                new EmployeeStateDBO(
+                        employee.getEmployeeState().getStateId().getValue(),
+                        employee.getEmployeeState().getStateName().getValue()
+                )
+        );
+    }
 
 }
