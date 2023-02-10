@@ -22,7 +22,15 @@ public class SalaryHistoryRepositoryAdapter implements ISalaryHistoryRepository 
     }
 
     @Override
+    public List<SalaryHistory> findSalaryHistories() {
+        List<SalaryHistoryDBO> salaryHistoryBD = this.iSalaryHistoryRepositoryAdapter.findAll();
+        return salaryHistoryBD.stream().map(SalaryHistoryDBO::toDomain).toList();
+    }
+
+    @Override
     public List<SalaryHistory> findSalaryHistoryByEmployeeId(String employeeId) {
-        return null;
+        List<SalaryHistoryDBO> salaryHistoryBD =
+                this.iSalaryHistoryRepositoryAdapter.findByEmployee_IdentificationId(employeeId);
+        return salaryHistoryBD.stream().map(SalaryHistoryDBO::toDomain).toList();
     }
 }
