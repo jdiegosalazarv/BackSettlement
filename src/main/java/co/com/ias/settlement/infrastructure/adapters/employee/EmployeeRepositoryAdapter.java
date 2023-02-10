@@ -18,7 +18,7 @@ public class EmployeeRepositoryAdapter implements IEmployeeRepository {
 
     @Override
     public Employee saveEmployee(Employee employee) {
-        EmployeeDBO employeeDBO = EmployeeDBO.fromDomain(employee);
+        EmployeeDBO employeeDBO = EmployeeDBO.fromDomainToDBO(employee);
         EmployeeDBO employeeDBO1 = this.iEmployeeRepositoryAdapter.save(employeeDBO);
         return EmployeeDBO.toDomain(employeeDBO1);
     }
@@ -36,5 +36,12 @@ public class EmployeeRepositoryAdapter implements IEmployeeRepository {
     public List<Employee> findEmployees() {
         List<EmployeeDBO> employeeDBOS = this.iEmployeeRepositoryAdapter.findAll();
         return employeeDBOS.stream().map(EmployeeDBO::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public Employee updateEmployee(Employee employee) {
+        EmployeeDBO employeeDBO = EmployeeDBO.fromDomain(employee);
+        EmployeeDBO employeeDBO1 = this.iEmployeeRepositoryAdapter.save(employeeDBO);
+        return EmployeeDBO.toDomain(employeeDBO1);
     }
 }

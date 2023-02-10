@@ -11,4 +11,6 @@ public interface IEmployeeRepository {
     Employee findEmployeeById(String id);
 
     List<Employee> findEmployees();
+
+    Employee updateEmployee(Employee employee);
 }

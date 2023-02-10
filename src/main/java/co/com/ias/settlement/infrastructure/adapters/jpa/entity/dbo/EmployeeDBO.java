@@ -66,4 +66,19 @@ public class EmployeeDBO {
         );
     }
 
+    public static EmployeeDBO fromDomainToDBO(Employee employee) {
+        return new EmployeeDBO(
+                employee.getIdentificationId().getValue(),
+                employee.getName().getValue(),
+                employee.getContractStartDate().getValue(),
+                employee.getEmployeePosition().getValue(),
+                employee.getSalary().getValue(),
+                null,
+                new EmployeeStateDBO(
+                        employee.getEmployeeState().getStateId().getValue(),
+                        employee.getEmployeeState().getStateName().getValue()
+                )
+        );
+    }
+
 }

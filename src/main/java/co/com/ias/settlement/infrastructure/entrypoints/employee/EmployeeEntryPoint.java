@@ -36,8 +36,17 @@ public class EmployeeEntryPoint {
     }
 
     @RequestMapping
-    public List<EmployeeDTO> findEmployees() {
+    public ResponseEntity<?> findEmployees() {
         List<Employee> employees = this.employeeSaveUseCase.findEmployees();
-        return employees.stream().map(EmployeeDTO::fromDomain).collect(Collectors.toList());
+        return ResponseEntity.status(200).body(employees.stream().map(EmployeeDTO::fromDomain).collect(Collectors.toList()));
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        EmployeeState employeeState = new EmployeeState(new StateId(employeeDTO.getEmployeeState().getId()),
+                new StateName(employeeDTO.getEmployeeState().getStateName()));
+        Employee employee = EmployeeDTO.toDomain(employeeDTO, employeeState);
+        EmployeeDTO employeeDTO1 = EmployeeDTO.fromDomain(this.employeeSaveUseCase.updateEmployee(employee));
+        return ResponseEntity.status(200).body(employeeDTO1);
     }
 }
