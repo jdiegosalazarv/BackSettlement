@@ -43,7 +43,6 @@ public class SalaryHistoryDBO {
                         new ContractStartDate(salaryHistoryDBO.getEmployee().getContractStartDate()),
                         new EmployeePosition(salaryHistoryDBO.getEmployee().getEmployeePosition()),
                         new Salary(salaryHistoryDBO.getEmployee().getSalary()),
-                        new UpdateDate(salaryHistoryDBO.getEmployee().getUpdateDate()),
                         new EmployeeState(
                                 new StateId(salaryHistoryDBO.getEmployee().getEmployeeState().getId()),
                                 new StateName(salaryHistoryDBO.getEmployee().getEmployeeState().getStateName())
@@ -63,7 +62,6 @@ public class SalaryHistoryDBO {
                         salaryHistory.getEmployee().getContractStartDate().getValue(),
                         salaryHistory.getEmployee().getEmployeePosition().getValue(),
                         salaryHistory.getEmployee().getSalary().getValue(),
-                        salaryHistory.getEmployee().getUpdateDate().getValue(),
                         new EmployeeStateDBO(
                                 salaryHistory.getEmployee().getEmployeeState().getStateId().getValue(),
                                 salaryHistory.getEmployee().getEmployeeState().getStateName().getValue()
