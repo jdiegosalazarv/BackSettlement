@@ -44,4 +44,13 @@ public class EmployeeRepositoryAdapter implements IEmployeeRepository {
         EmployeeDBO employeeDBO1 = this.iEmployeeRepositoryAdapter.save(employeeDBO);
         return EmployeeDBO.toDomain(employeeDBO1);
     }
+
+    @Override
+    public void deleteEmployee(String id) {
+        Optional<EmployeeDBO> employeeDBO = this.iEmployeeRepositoryAdapter.findById(id);
+        if (employeeDBO.isEmpty()) {
+            throw new NullPointerException("No existe empleado con el id: " + id);
+        }
+        this.iEmployeeRepositoryAdapter.deleteById(id);
+    }
 }

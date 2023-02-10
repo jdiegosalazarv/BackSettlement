@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class EmployeeStateEntryPoint {
 
-    private final EmployeeStateUseCase employeeStateSaveUseCase;
+    private final EmployeeStateUseCase employeeStateUseCase;
 
     @PostMapping
     public ResponseEntity<?> saveEmployeeState(@RequestBody EmployeeStateDTO employeeStateDTO) {
         EmployeeState employeeState = EmployeeStateDTO.toDomain(employeeStateDTO);
-        EmployeeState employeeState1 = this.employeeStateSaveUseCase.saveEmployeeState(employeeState);
+        EmployeeState employeeState1 = this.employeeStateUseCase.saveEmployeeState(employeeState);
         return ResponseEntity.status(201).body(EmployeeStateDTO.fromDomain(employeeState1));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> finByIdEmployeeState(@PathVariable Integer id) {
-        EmployeeState employeeState = this.employeeStateSaveUseCase.findByIdEmployeeState(id);
+        EmployeeState employeeState = this.employeeStateUseCase.findByIdEmployeeState(id);
         return ResponseEntity.status(200).body(EmployeeStateDTO.fromDomain(employeeState));
     }
 }

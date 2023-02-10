@@ -26,7 +26,6 @@ public class EmployeeUseCase {
         return this.iEmployeeRepository.saveEmployee(newEmployee);
     }
 
-    //a partir de este punto nuevos metodos
     public List<Employee> findEmployees() {
         return this.iEmployeeRepository.findEmployees();
     }
@@ -41,5 +40,9 @@ public class EmployeeUseCase {
                 employeeBD.getContractStartDate(), employee.getEmployeePosition(), employee.getSalary(),
                 new UpdateDate(LocalDate.now()), employeeBD.getEmployeeState());
         return this.iEmployeeRepository.updateEmployee(newEmployee);
+    }
+
+    public void deleteEmployee(String id) {
+        this.iEmployeeRepository.deleteEmployee(id);
     }
 }
