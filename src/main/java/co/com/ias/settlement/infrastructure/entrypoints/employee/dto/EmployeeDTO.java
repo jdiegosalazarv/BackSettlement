@@ -26,8 +26,6 @@ public class EmployeeDTO {
 
     private Double salary;
 
-    private LocalDate updateDate;
-
     private EmployeeStateDTO employeeState;
 
     public static Employee toDomain(EmployeeDTO employeeDTO, EmployeeState employeeState) {
@@ -37,7 +35,6 @@ public class EmployeeDTO {
                 new ContractStartDate(employeeDTO.getContractStartDate()),
                 new EmployeePosition(employeeDTO.getEmployeePosition()),
                 new Salary(employeeDTO.getSalary()),
-                new UpdateDate(employeeDTO.getUpdateDate()),
                 new EmployeeState(employeeState.getStateId(), employeeState.getStateName())
         );
     }
@@ -49,7 +46,6 @@ public class EmployeeDTO {
                 employee.getContractStartDate().getValue(),
                 employee.getEmployeePosition().getValue(),
                 employee.getSalary().getValue(),
-                employee.getUpdateDate().getValue(),
                 new EmployeeStateDTO(
                         employee.getEmployeeState().getStateId().getValue(),
                         employee.getEmployeeState().getStateName().getValue()

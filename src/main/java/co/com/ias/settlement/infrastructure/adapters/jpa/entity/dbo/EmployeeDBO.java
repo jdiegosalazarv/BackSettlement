@@ -30,8 +30,6 @@ public class EmployeeDBO {
 
     private Double salary;
 
-    private LocalDate updateDate;
-
     @ManyToOne
     @JoinColumn(name = "employee_state_id", referencedColumnName = "id")
     private EmployeeStateDBO employeeState;
@@ -43,7 +41,6 @@ public class EmployeeDBO {
                 new ContractStartDate(employeeDBO.getContractStartDate()),
                 new EmployeePosition(employeeDBO.getEmployeePosition()),
                 new Salary(employeeDBO.getSalary()),
-                new UpdateDate(employeeDBO.getUpdateDate()),
                 new EmployeeState(
                         new StateId(employeeDBO.getEmployeeState().getId()),
                         new StateName(employeeDBO.getEmployeeState().getStateName())
@@ -58,7 +55,6 @@ public class EmployeeDBO {
                 employee.getContractStartDate().getValue(),
                 employee.getEmployeePosition().getValue(),
                 employee.getSalary().getValue(),
-                employee.getUpdateDate().getValue(),
                 new EmployeeStateDBO(
                         employee.getEmployeeState().getStateId().getValue(),
                         employee.getEmployeeState().getStateName().getValue()
@@ -73,7 +69,6 @@ public class EmployeeDBO {
                 employee.getContractStartDate().getValue(),
                 employee.getEmployeePosition().getValue(),
                 employee.getSalary().getValue(),
-                null,
                 new EmployeeStateDBO(
                         employee.getEmployeeState().getStateId().getValue(),
                         employee.getEmployeeState().getStateName().getValue()
