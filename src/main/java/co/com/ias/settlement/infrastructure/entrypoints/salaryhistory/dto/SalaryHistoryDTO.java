@@ -39,6 +39,7 @@ public class SalaryHistoryDTO {
                         salaryHistory.getEmployee().getContractStartDate().getValue(),
                         salaryHistory.getEmployee().getEmployeePosition().getValue(),
                         salaryHistory.getEmployee().getSalary().getValue(),
+                        (salaryHistory.getEmployee().getUpdateEmployDate().getValue() == null) ? null : salaryHistory.getEmployee().getUpdateEmployDate().getValue(),
                         new EmployeeStateDTO(
                                 salaryHistory.getEmployee().getEmployeeState().getStateId().getValue(),
                                 salaryHistory.getEmployee().getEmployeeState().getStateName().getValue()

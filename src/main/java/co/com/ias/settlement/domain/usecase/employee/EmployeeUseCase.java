@@ -47,11 +47,12 @@ public class EmployeeUseCase {
     public Employee updateEmployee(Employee employee) {
         Employee employeeBD = this.iEmployeeRepository.findEmployeeById(employee.getIdentificationId().getValue());
         Employee newEmployee = new Employee(employeeBD.getIdentificationId(), employeeBD.getName(),
-                employeeBD.getContractStartDate(), employee.getEmployeePosition(), employee.getSalary(), employeeBD.getEmployeeState());
+                employeeBD.getContractStartDate(), employee.getEmployeePosition(), employee.getSalary(), employee.getUpdateEmployDate(),
+                employeeBD.getEmployeeState());
         SalaryHistory salaryHistory = new SalaryHistory(new NewSalary(newEmployee.getSalary().getValue()),
                 new UpdateSalaryDate(LocalDate.now()), newEmployee);
         Employee employeeUpdated = this.iEmployeeRepository.updateEmployee(newEmployee);
-        this.iSalaryHistoryRepository.saveSalaryHistory(salaryHistory);
+        this.iSalaryHistoryRepository.updateSalaryHistory(salaryHistory);
         return employeeUpdated;
     }
 

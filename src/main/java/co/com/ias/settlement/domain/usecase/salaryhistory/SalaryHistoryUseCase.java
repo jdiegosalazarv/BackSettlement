@@ -28,7 +28,8 @@ public class SalaryHistoryUseCase {
     }
 
     public List<SalaryHistory> getSalariesHistory() {
-        return this.iSalaryHistoryRepository.findSalaryHistories();
+        List<SalaryHistory> salaryHistoryList = this.iSalaryHistoryRepository.findSalaryHistories();
+        return salaryHistoryList;
     }
 
     public List<SalaryHistory> getSalariesHistoryByEmployeeId(String employeeId) {

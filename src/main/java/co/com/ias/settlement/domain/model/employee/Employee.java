@@ -8,15 +8,16 @@ public class Employee {
     private final ContractStartDate contractStartDate;
     private final EmployeePosition employeePosition;
     private final Salary salary;
+    private final UpdateEmployDate updateEmployDate;
     private final EmployeeState employeeState;
 
-    public Employee(IdentificationId identificationId, EmployeeName name, ContractStartDate date,
-                    EmployeePosition employeePosition, Salary salary, EmployeeState employeeState) {
+    public Employee(IdentificationId identificationId, EmployeeName name, ContractStartDate contractStartDate, EmployeePosition employeePosition, Salary salary, UpdateEmployDate updateEmployDate, EmployeeState employeeState) {
         this.identificationId = identificationId;
         this.name = name;
-        this.contractStartDate = date;
+        this.contractStartDate = contractStartDate;
         this.employeePosition = employeePosition;
         this.salary = salary;
+        this.updateEmployDate = updateEmployDate;
         this.employeeState = employeeState;
     }
 
@@ -38,6 +39,10 @@ public class Employee {
 
     public Salary getSalary() {
         return salary;
+    }
+
+    public UpdateEmployDate getUpdateEmployDate() {
+        return updateEmployDate;
     }
 
     public EmployeeState getEmployeeState() {

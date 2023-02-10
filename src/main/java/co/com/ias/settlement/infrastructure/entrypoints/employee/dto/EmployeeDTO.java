@@ -26,16 +26,34 @@ public class EmployeeDTO {
 
     private Double salary;
 
+    private LocalDate updateEmployeeDate;
+
     private EmployeeStateDTO employeeState;
 
-    public static Employee toDomain(EmployeeDTO employeeDTO, EmployeeState employeeState) {
+    public static Employee toDomainForSave(EmployeeDTO employeeDTO, EmployeeState employeeState) {
         return new Employee(
                 new IdentificationId(employeeDTO.getIdentificationId()),
                 new EmployeeName(employeeDTO.getEmployeeName()),
                 new ContractStartDate(employeeDTO.getContractStartDate()),
                 new EmployeePosition(employeeDTO.getEmployeePosition()),
                 new Salary(employeeDTO.getSalary()),
+                null,
                 new EmployeeState(employeeState.getStateId(), employeeState.getStateName())
+        );
+    }
+
+    public static EmployeeDTO fromDomainForSave(Employee employee) {
+        return new EmployeeDTO(
+                employee.getIdentificationId().getValue(),
+                employee.getName().getValue(),
+                employee.getContractStartDate().getValue(),
+                employee.getEmployeePosition().getValue(),
+                employee.getSalary().getValue(),
+                null,
+                new EmployeeStateDTO(
+                        employee.getEmployeeState().getStateId().getValue(),
+                        employee.getEmployeeState().getStateName().getValue()
+                )
         );
     }
 
@@ -46,10 +64,24 @@ public class EmployeeDTO {
                 employee.getContractStartDate().getValue(),
                 employee.getEmployeePosition().getValue(),
                 employee.getSalary().getValue(),
+                employee.getUpdateEmployDate().getValue(),
                 new EmployeeStateDTO(
                         employee.getEmployeeState().getStateId().getValue(),
                         employee.getEmployeeState().getStateName().getValue()
                 )
         );
     }
+
+    public static Employee toDomain(EmployeeDTO employeeDTO, EmployeeState employeeState) {
+        return new Employee(
+                new IdentificationId(employeeDTO.getIdentificationId()),
+                new EmployeeName(employeeDTO.getEmployeeName()),
+                new ContractStartDate(employeeDTO.getContractStartDate()),
+                new EmployeePosition(employeeDTO.getEmployeePosition()),
+                new Salary(employeeDTO.getSalary()),
+                new UpdateEmployDate(LocalDate.now()),
+                new EmployeeState(employeeState.getStateId(), employeeState.getStateName())
+        );
+    }
+
 }
