@@ -24,8 +24,8 @@ public class EmployeeEntryPoint {
     @PostMapping
     public ResponseEntity<?> saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
         EmployeeState employeeState = new EmployeeState(new StateId(this.EMPLOYEE_STATE_ID), new StateName(this.EMPLOYEE_STATE_NAME));
-        Employee employee = EmployeeDTO.toDomain(employeeDTO, employeeState);
-        EmployeeDTO employeeDTO1 = EmployeeDTO.fromDomain(this.employeeSaveUseCase.saveEmployee(employee));
+        Employee employee = EmployeeDTO.toDomainForSave(employeeDTO, employeeState);
+        EmployeeDTO employeeDTO1 = EmployeeDTO.fromDomainForSave(this.employeeSaveUseCase.saveEmployee(employee));
         return ResponseEntity.status(201).body(employeeDTO1);
     }
 

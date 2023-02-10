@@ -18,7 +18,7 @@ public class EmployeeRepositoryAdapter implements IEmployeeRepository {
 
     @Override
     public Employee saveEmployee(Employee employee) {
-        EmployeeDBO employeeDBO = EmployeeDBO.fromDomainToDBO(employee);
+        EmployeeDBO employeeDBO = EmployeeDBO.fromDomainForSave(employee);
         EmployeeDBO employeeDBO1 = this.iEmployeeRepositoryAdapter.save(employeeDBO);
         return EmployeeDBO.toDomain(employeeDBO1);
     }

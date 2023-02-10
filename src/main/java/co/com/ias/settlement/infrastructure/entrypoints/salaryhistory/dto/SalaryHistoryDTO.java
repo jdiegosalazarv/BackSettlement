@@ -21,25 +21,6 @@ public class SalaryHistoryDTO {
     private LocalDate updateSalaryDate;
     private EmployeeDTO employee;
 
-//    public static SalaryHistory toDomain(SalaryHistoryDTO salaryHistoryDTO) {
-//        return new SalaryHistory(
-//                new NewSalary(salaryHistoryDTO.getNewSalary()),
-//                new UpdateSalaryDate(salaryHistoryDTO.getUpdateSalaryDate()),
-//                new Employee(
-//                        new IdentificationId(salaryHistoryDTO.getEmployee().getIdentificationId()),
-//                        new EmployeeName(salaryHistoryDTO.getEmployee().getEmployeeName()),
-//                        new ContractStartDate(salaryHistoryDTO.getEmployee().getContractStartDate()),
-//                        new EmployeePosition(salaryHistoryDTO.getEmployee().getEmployeePosition()),
-//                        new Salary(salaryHistoryDTO.getEmployee().getSalary()),
-//                        new UpdateDate(salaryHistoryDTO.getEmployee().getUpdateDate()),
-//                        new EmployeeState(
-//                                new StateId(salaryHistoryDTO.getEmployee().getEmployeeState().getId()),
-//                                new StateName(salaryHistoryDTO.getEmployee().getEmployeeState().getStateName())
-//                        )
-//                )
-//        );
-//    }
-
     public static SalaryHistory toDomain(SalaryHistoryDTO salaryHistoryDTO) {
         return new SalaryHistory(
                 new NewSalary(salaryHistoryDTO.getNewSalary()),
@@ -58,7 +39,7 @@ public class SalaryHistoryDTO {
                         salaryHistory.getEmployee().getContractStartDate().getValue(),
                         salaryHistory.getEmployee().getEmployeePosition().getValue(),
                         salaryHistory.getEmployee().getSalary().getValue(),
-                        salaryHistory.getEmployee().getUpdateDate().getValue(),
+                        (salaryHistory.getEmployee().getUpdateEmployDate().getValue() == null) ? null : salaryHistory.getEmployee().getUpdateEmployDate().getValue(),
                         new EmployeeStateDTO(
                                 salaryHistory.getEmployee().getEmployeeState().getStateId().getValue(),
                                 salaryHistory.getEmployee().getEmployeeState().getStateName().getValue()

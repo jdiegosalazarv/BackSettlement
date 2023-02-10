@@ -4,27 +4,20 @@ import co.com.ias.settlement.domain.model.employeestate.EmployeeState;
 
 public class Employee {
     private final IdentificationId identificationId;
-
     private final EmployeeName name;
-
     private final ContractStartDate contractStartDate;
-
     private final EmployeePosition employeePosition;
-
     private final Salary salary;
-
-    private final UpdateDate updateDate;
-
+    private final UpdateEmployDate updateEmployDate;
     private final EmployeeState employeeState;
 
-    public Employee(IdentificationId identificationId, EmployeeName name, ContractStartDate date,
-                    EmployeePosition employeePosition, Salary salary, UpdateDate updateDate, EmployeeState employeeState) {
+    public Employee(IdentificationId identificationId, EmployeeName name, ContractStartDate contractStartDate, EmployeePosition employeePosition, Salary salary, UpdateEmployDate updateEmployDate, EmployeeState employeeState) {
         this.identificationId = identificationId;
         this.name = name;
-        this.contractStartDate = date;
+        this.contractStartDate = contractStartDate;
         this.employeePosition = employeePosition;
         this.salary = salary;
-        this.updateDate = updateDate;
+        this.updateEmployDate = updateEmployDate;
         this.employeeState = employeeState;
     }
 
@@ -48,8 +41,8 @@ public class Employee {
         return salary;
     }
 
-    public UpdateDate getUpdateDate() {
-        return updateDate;
+    public UpdateEmployDate getUpdateEmployDate() {
+        return updateEmployDate;
     }
 
     public EmployeeState getEmployeeState() {
