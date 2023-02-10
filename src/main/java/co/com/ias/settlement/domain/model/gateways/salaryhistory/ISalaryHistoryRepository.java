@@ -8,5 +8,7 @@ public interface ISalaryHistoryRepository {
 
     SalaryHistory saveSalaryHistory(SalaryHistory salaryHistory);
 
+    List<SalaryHistory> findSalaryHistories();
+
     List<SalaryHistory> findSalaryHistoryByEmployeeId(String employeeId);
 }

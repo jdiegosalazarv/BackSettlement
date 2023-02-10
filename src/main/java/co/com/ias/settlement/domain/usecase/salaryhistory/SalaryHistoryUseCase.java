@@ -5,6 +5,8 @@ import co.com.ias.settlement.domain.model.gateways.employee.IEmployeeRepository;
 import co.com.ias.settlement.domain.model.gateways.salaryhistory.ISalaryHistoryRepository;
 import co.com.ias.settlement.domain.model.salaryhistory.SalaryHistory;
 
+import java.util.List;
+
 public class SalaryHistoryUseCase {
 
     private final ISalaryHistoryRepository iSalaryHistoryRepository;
@@ -23,5 +25,13 @@ public class SalaryHistoryUseCase {
                 employee
         );
         return this.iSalaryHistoryRepository.saveSalaryHistory(newSalaryHistory);
+    }
+
+    public List<SalaryHistory> getSalariesHistory() {
+        return this.iSalaryHistoryRepository.findSalaryHistories();
+    }
+
+    public List<SalaryHistory> getSalariesHistoryByEmployeeId(String employeeId) {
+        return this.iSalaryHistoryRepository.findSalaryHistoryByEmployeeId(employeeId);
     }
 }
