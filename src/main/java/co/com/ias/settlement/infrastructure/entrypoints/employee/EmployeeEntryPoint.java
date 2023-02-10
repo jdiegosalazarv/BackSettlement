@@ -1,6 +1,9 @@
 package co.com.ias.settlement.infrastructure.entrypoints.employee;
 
 import co.com.ias.settlement.domain.model.employee.Employee;
+import co.com.ias.settlement.domain.model.employeestate.EmployeeState;
+import co.com.ias.settlement.domain.model.employeestate.StateId;
+import co.com.ias.settlement.domain.model.employeestate.StateName;
 import co.com.ias.settlement.domain.usecase.employee.EmployeeUseCase;
 import co.com.ias.settlement.infrastructure.entrypoints.employee.dto.EmployeeDTO;
 import lombok.AllArgsConstructor;
@@ -15,20 +18,15 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EmployeeEntryPoint {
     private final EmployeeUseCase employeeSaveUseCase;
-
-//    private final EmployeeStateUseCase employeeStateUseCase;
+    private final Integer EMPLOYEE_STATE_ID = 1;
+    private final String EMPLOYEE_STATE_NAME = "Activo";
 
     @PostMapping
     public ResponseEntity<?> saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        try {
-//            EmployeeState employeeState =
-//                    this.employeeStateUseCase.findByIdEmployeeState(1);
-            Employee employee = EmployeeDTO.toDomain(employeeDTO);
-            EmployeeDTO employeeDTO1 = EmployeeDTO.fromDomain(this.employeeSaveUseCase.saveEmployee(employee));
-            return ResponseEntity.status(201).body(employeeDTO1);
-        } catch (IllegalArgumentException | NullPointerException e) {
-            return ResponseEntity.status(400).body(e.getMessage());
-        }
+        EmployeeState employeeState = new EmployeeState(new StateId(this.EMPLOYEE_STATE_ID), new StateName(this.EMPLOYEE_STATE_NAME));
+        Employee employee = EmployeeDTO.toDomain(employeeDTO, employeeState);
+        EmployeeDTO employeeDTO1 = EmployeeDTO.fromDomain(this.employeeSaveUseCase.saveEmployee(employee));
+        return ResponseEntity.status(201).body(employeeDTO1);
     }
 
     @GetMapping("/{id}")

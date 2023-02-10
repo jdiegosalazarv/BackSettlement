@@ -1,7 +1,6 @@
 package co.com.ias.settlement.domain.usecase.employee;
 
 import co.com.ias.settlement.domain.model.employee.Employee;
-import co.com.ias.settlement.domain.model.employeestate.EmployeeState;
 import co.com.ias.settlement.domain.model.gateways.employee.IEmployeeRepository;
 import co.com.ias.settlement.domain.model.gateways.employeestate.IEmployeeStateRepository;
 
@@ -19,11 +18,7 @@ public class EmployeeUseCase {
     }
 
     public Employee saveEmployee(Employee employee) {
-        EmployeeState employeeState = this.iEmployeeStateRepository.findByIdEmployeeState(1);
-        Employee employee1 = new Employee(employee.getIdentificationId(), employee.getName(),
-                employee.getContractStartDate(), employee.getEmployeePosition(), employee.getSalary(),
-                employee.getUpdateDate(), employeeState);
-        return this.iEmployeeRepository.saveEmployee(employee1);
+        return this.iEmployeeRepository.saveEmployee(employee);
     }
 
     //a partir de este punto nuevos metodos

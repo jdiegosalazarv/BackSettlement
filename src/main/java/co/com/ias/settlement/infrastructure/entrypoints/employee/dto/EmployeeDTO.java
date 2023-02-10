@@ -2,8 +2,6 @@ package co.com.ias.settlement.infrastructure.entrypoints.employee.dto;
 
 import co.com.ias.settlement.domain.model.employee.*;
 import co.com.ias.settlement.domain.model.employeestate.EmployeeState;
-import co.com.ias.settlement.domain.model.employeestate.StateId;
-import co.com.ias.settlement.domain.model.employeestate.StateName;
 import co.com.ias.settlement.infrastructure.entrypoints.employeestate.dto.EmployeeStateDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,7 +30,7 @@ public class EmployeeDTO {
 
     private EmployeeStateDTO employeeState;
 
-    public static Employee toDomain(EmployeeDTO employeeDTO) {
+    public static Employee toDomain(EmployeeDTO employeeDTO, EmployeeState employeeState) {
         return new Employee(
                 new IdentificationId(employeeDTO.getIdentificationId()),
                 new EmployeeName(employeeDTO.getEmployeeName()),
@@ -40,8 +38,7 @@ public class EmployeeDTO {
                 new EmployeePosition(employeeDTO.getEmployeePosition()),
                 new Salary(employeeDTO.getSalary()),
                 new UpdateDate(employeeDTO.getUpdateDate()),
-                new EmployeeState(new StateId(employeeDTO.getEmployeeState().getId()),
-                        new StateName(employeeDTO.getEmployeeState().getStateName()))
+                new EmployeeState(employeeState.getStateId(), employeeState.getStateName())
         );
     }
 
