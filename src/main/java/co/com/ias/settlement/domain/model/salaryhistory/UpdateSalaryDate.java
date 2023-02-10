@@ -1,4 +1,4 @@
-package co.com.ias.settlement.domain.model.salarychanges;
+package co.com.ias.settlement.domain.model.salaryhistory;
 
 import java.time.LocalDate;
 

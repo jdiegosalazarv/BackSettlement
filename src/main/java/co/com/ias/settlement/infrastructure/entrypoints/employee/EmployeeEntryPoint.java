@@ -49,4 +49,10 @@ public class EmployeeEntryPoint {
         EmployeeDTO employeeDTO1 = EmployeeDTO.fromDomain(this.employeeSaveUseCase.updateEmployee(employee));
         return ResponseEntity.status(200).body(employeeDTO1);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEmployee(@PathVariable String id) {
+        this.employeeSaveUseCase.deleteEmployee(id);
+        return ResponseEntity.status(204).body("Empleado eliminado");
+    }
 }
