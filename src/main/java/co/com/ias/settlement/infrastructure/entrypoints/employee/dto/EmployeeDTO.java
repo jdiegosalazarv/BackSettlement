@@ -2,6 +2,8 @@ package co.com.ias.settlement.infrastructure.entrypoints.employee.dto;
 
 import co.com.ias.settlement.domain.model.employee.*;
 import co.com.ias.settlement.domain.model.employeestate.EmployeeState;
+import co.com.ias.settlement.domain.model.employeestate.StateId;
+import co.com.ias.settlement.domain.model.employeestate.StateName;
 import co.com.ias.settlement.infrastructure.entrypoints.employeestate.dto.EmployeeStateDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,30 +32,18 @@ public class EmployeeDTO {
 
     private EmployeeStateDTO employeeState;
 
-    public static Employee toDomainForSave(EmployeeDTO employeeDTO, EmployeeState employeeState) {
+    public static Employee toDomain(EmployeeDTO employeeDTO) {
         return new Employee(
                 new IdentificationId(employeeDTO.getIdentificationId()),
                 new EmployeeName(employeeDTO.getEmployeeName()),
                 new ContractStartDate(employeeDTO.getContractStartDate()),
                 new EmployeePosition(employeeDTO.getEmployeePosition()),
                 new Salary(employeeDTO.getSalary()),
-                null,
-                new EmployeeState(employeeState.getStateId(), employeeState.getStateName())
-        );
-    }
-
-    public static EmployeeDTO fromDomainForSave(Employee employee) {
-        return new EmployeeDTO(
-                employee.getIdentificationId().getValue(),
-                employee.getName().getValue(),
-                employee.getContractStartDate().getValue(),
-                employee.getEmployeePosition().getValue(),
-                employee.getSalary().getValue(),
-                null,
-                new EmployeeStateDTO(
-                        employee.getEmployeeState().getStateId().getValue(),
-                        employee.getEmployeeState().getStateName().getValue()
-                )
+                (employeeDTO.getUpdateEmployeeDate() == null) ? null :
+                        new UpdateEmployDate(employeeDTO.getUpdateEmployeeDate()),
+                (employeeDTO.getEmployeeState() == null) ? null :
+                        new EmployeeState(new StateId(employeeDTO.getEmployeeState().getId()),
+                                new StateName(employeeDTO.getEmployeeState().getStateName()))
         );
     }
 
@@ -64,23 +54,11 @@ public class EmployeeDTO {
                 employee.getContractStartDate().getValue(),
                 employee.getEmployeePosition().getValue(),
                 employee.getSalary().getValue(),
-                employee.getUpdateEmployDate().getValue(),
+                (employee.getUpdateEmployDate() == null) ? null : employee.getUpdateEmployDate().getValue(),
                 new EmployeeStateDTO(
                         employee.getEmployeeState().getStateId().getValue(),
                         employee.getEmployeeState().getStateName().getValue()
                 )
-        );
-    }
-
-    public static Employee toDomain(EmployeeDTO employeeDTO, EmployeeState employeeState) {
-        return new Employee(
-                new IdentificationId(employeeDTO.getIdentificationId()),
-                new EmployeeName(employeeDTO.getEmployeeName()),
-                new ContractStartDate(employeeDTO.getContractStartDate()),
-                new EmployeePosition(employeeDTO.getEmployeePosition()),
-                new Salary(employeeDTO.getSalary()),
-                new UpdateEmployDate(LocalDate.now()),
-                new EmployeeState(employeeState.getStateId(), employeeState.getStateName())
         );
     }
 
