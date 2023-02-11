@@ -33,46 +33,6 @@ public class SalaryHistoryDBO {
     @JoinColumn(name = "employee_id", referencedColumnName = "identificationId")
     private EmployeeDBO employee;
 
-    public static SalaryHistory toDomainForSave(SalaryHistoryDBO salaryHistoryDBO) {
-        return new SalaryHistory(
-                new NewSalary(salaryHistoryDBO.getNewSalary()),
-                new UpdateSalaryDate(salaryHistoryDBO.getUpdateSalaryDate()),
-                new Employee(
-                        new IdentificationId(salaryHistoryDBO.getEmployee().getIdentificationId()),
-                        new EmployeeName(salaryHistoryDBO.getEmployee().getEmployeeName()),
-                        new ContractStartDate(salaryHistoryDBO.getEmployee().getContractStartDate()),
-                        new EmployeePosition(salaryHistoryDBO.getEmployee().getEmployeePosition()),
-                        new Salary(salaryHistoryDBO.getEmployee().getSalary()),
-                        null,
-                        new EmployeeState(
-                                new StateId(salaryHistoryDBO.getEmployee().getEmployeeState().getId()),
-                                new StateName(salaryHistoryDBO.getEmployee().getEmployeeState().getStateName())
-                        )
-                )
-        );
-    }
-
-    public static SalaryHistoryDBO fromDomainForSave(SalaryHistory salaryHistory) {
-        return new SalaryHistoryDBO(
-                null,
-                salaryHistory.getNewSalary().getValue(),
-                salaryHistory.getUpdateSalaryDate().getValue(),
-                new EmployeeDBO(
-                        salaryHistory.getEmployee().getIdentificationId().getValue(),
-                        salaryHistory.getEmployee().getName().getValue(),
-                        salaryHistory.getEmployee().getContractStartDate().getValue(),
-                        salaryHistory.getEmployee().getEmployeePosition().getValue(),
-                        salaryHistory.getEmployee().getSalary().getValue(),
-                        null,
-                        new EmployeeStateDBO(
-                                salaryHistory.getEmployee().getEmployeeState().getStateId().getValue(),
-                                salaryHistory.getEmployee().getEmployeeState().getStateName().getValue()
-                        )
-
-                )
-        );
-    }
-
     public static SalaryHistory toDomain(SalaryHistoryDBO salaryHistoryDBO) {
         return new SalaryHistory(
                 new NewSalary(salaryHistoryDBO.getNewSalary()),
@@ -83,7 +43,8 @@ public class SalaryHistoryDBO {
                         new ContractStartDate(salaryHistoryDBO.getEmployee().getContractStartDate()),
                         new EmployeePosition(salaryHistoryDBO.getEmployee().getEmployeePosition()),
                         new Salary(salaryHistoryDBO.getEmployee().getSalary()),
-                        new UpdateEmployDate(salaryHistoryDBO.getEmployee().getUpdateEmployeeDate()),
+                        (salaryHistoryDBO.getEmployee().getUpdateEmployeeDate() == null) ? null :
+                                new UpdateEmployDate(salaryHistoryDBO.getEmployee().getUpdateEmployeeDate()),
                         new EmployeeState(
                                 new StateId(salaryHistoryDBO.getEmployee().getEmployeeState().getId()),
                                 new StateName(salaryHistoryDBO.getEmployee().getEmployeeState().getStateName())
@@ -103,7 +64,8 @@ public class SalaryHistoryDBO {
                         salaryHistory.getEmployee().getContractStartDate().getValue(),
                         salaryHistory.getEmployee().getEmployeePosition().getValue(),
                         salaryHistory.getEmployee().getSalary().getValue(),
-                        salaryHistory.getUpdateSalaryDate().getValue(),
+                        (salaryHistory.getEmployee().getUpdateEmployDate() == null) ? null :
+                                salaryHistory.getEmployee().getUpdateEmployDate().getValue(),
                         new EmployeeStateDBO(
                                 salaryHistory.getEmployee().getEmployeeState().getStateId().getValue(),
                                 salaryHistory.getEmployee().getEmployeeState().getStateName().getValue()
