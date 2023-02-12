@@ -1,10 +1,10 @@
 package co.com.ias.settlement.domain.model.settlement;
 
-public class WorkingDarysActualYear {
+public class WorkingDaysActualYear {
 
     private final Integer value;
 
-    public WorkingDarysActualYear(Integer value) {
+    public WorkingDaysActualYear(Integer value) {
         this.value = value;
     }
 

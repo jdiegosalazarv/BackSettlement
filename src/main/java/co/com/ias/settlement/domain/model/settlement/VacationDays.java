@@ -2,13 +2,13 @@ package co.com.ias.settlement.domain.model.settlement;
 
 public class VacationDays {
 
-    private final Integer value;
+    private final Double value;
 
-    public VacationDays(Integer value) {
+    public VacationDays(Double value) {
         this.value = value;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 }
