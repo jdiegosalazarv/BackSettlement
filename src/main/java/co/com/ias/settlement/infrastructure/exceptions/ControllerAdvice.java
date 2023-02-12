@@ -16,7 +16,7 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler(value = IllegalArgumentException.class)
-    public ResponseEntity<ErrorDTO> illegalArgumentExceptionHandler(NullPointerException e) {
+    public ResponseEntity<ErrorDTO> illegalArgumentExceptionHandler(IllegalArgumentException e) {
         ErrorDTO errorDTO = new ErrorDTO(400, e.getMessage());
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }

@@ -1,7 +1,6 @@
 package co.com.ias.settlement.domain.usecase.employee;
 
 import co.com.ias.settlement.domain.model.employee.Employee;
-import co.com.ias.settlement.domain.model.employee.UpdateEmployDate;
 import co.com.ias.settlement.domain.model.employeestate.EmployeeState;
 import co.com.ias.settlement.domain.model.employeestate.StateId;
 import co.com.ias.settlement.domain.model.employeestate.StateName;
@@ -63,7 +62,7 @@ public class EmployeeUseCase {
                 employeeBD.getContractStartDate(),
                 employee.getEmployeePosition(),
                 employee.getSalary(),
-                new UpdateEmployDate(LocalDate.now()),
+                employee.getUpdateEmployDate(),
                 employeeBD.getEmployeeState()
         );
         SalaryHistory salaryHistory = new SalaryHistory(new NewSalary(newEmployee.getSalary().getValue()),
