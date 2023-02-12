@@ -45,6 +45,8 @@ public class SettlementDTO {
 
     private Double payrollPayable;
 
+    private Double bonus;
+
     private Double total;
 
     public static SettlementDTO fromDomain(Settlement settlement) {
@@ -76,6 +78,7 @@ public class SettlementDTO {
                 settlement.getSeveranceInterest().getValue(),
                 settlement.getServiceBonus().getValue(),
                 settlement.getPayrollPayable().getValue(),
+                settlement.getBonus().getValue(),
                 settlement.getTotal().getValue()
         );
     }

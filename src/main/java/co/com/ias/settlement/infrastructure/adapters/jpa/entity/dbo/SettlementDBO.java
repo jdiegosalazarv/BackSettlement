@@ -52,6 +52,8 @@ public class SettlementDBO {
     private Double serviceBonus;
 
     private Double payrollPayable;
+
+    private Double bonus;
     private Double total;
 
     public static Settlement toDomain(SettlementDBO settlementDBO) {
@@ -83,6 +85,7 @@ public class SettlementDBO {
                 new SeveranceInterest(settlementDBO.getSeveranceInterest()),
                 new ServiceBonus(settlementDBO.getServiceBonus()),
                 new PayrollPayable(settlementDBO.getPayrollPayable()),
+                new Bonus(settlementDBO.getBonus()),
                 new Total(settlementDBO.getTotal())
         );
     }
@@ -116,6 +119,7 @@ public class SettlementDBO {
                 settlement.getSeveranceInterest().getValue(),
                 settlement.getServiceBonus().getValue(),
                 settlement.getPayrollPayable().getValue(),
+                settlement.getBonus().getValue(),
                 settlement.getTotal().getValue()
         );
     }

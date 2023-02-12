@@ -34,13 +34,11 @@ public class Settlement {
 
     private final PayrollPayable payrollPayable;
 
+    private final Bonus bonus;
+
     private final Total total;
 
-    public Settlement(SettlementId id, Employee employee, TransportationAssistance transportationAssistance,
-                      FinalContractDate finalContractDate, WithdrawalReason withdrawalReason, WorkingDays workingDays,
-                      WorkingDaysActualYear workingDaysActualYear, VacationDays vacationDays, WorkingDaysLastSemester
-                              workingDaysLastSemester, BaseSalary baseSalary, Severance severance, Vacations vacations,
-                      SeveranceInterest severanceInterest, ServiceBonus serviceBonus, PayrollPayable payrollPayable, Total total) {
+    public Settlement(SettlementId id, Employee employee, TransportationAssistance transportationAssistance, FinalContractDate finalContractDate, WithdrawalReason withdrawalReason, WorkingDays workingDays, WorkingDaysActualYear workingDaysActualYear, VacationDays vacationDays, WorkingDaysLastSemester workingDaysLastSemester, BaseSalary baseSalary, Severance severance, Vacations vacations, SeveranceInterest severanceInterest, ServiceBonus serviceBonus, PayrollPayable payrollPayable, Bonus bonus, Total total) {
         this.id = id;
         this.employee = employee;
         this.transportationAssistance = transportationAssistance;
@@ -56,6 +54,7 @@ public class Settlement {
         this.severanceInterest = severanceInterest;
         this.serviceBonus = serviceBonus;
         this.payrollPayable = payrollPayable;
+        this.bonus = bonus;
         this.total = total;
     }
 
@@ -117,6 +116,10 @@ public class Settlement {
 
     public PayrollPayable getPayrollPayable() {
         return payrollPayable;
+    }
+
+    public Bonus getBonus() {
+        return bonus;
     }
 
     public Total getTotal() {
