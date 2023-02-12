@@ -1,11 +1,13 @@
 package co.com.ias.settlement.domain.usecase.utils;
 
 import co.com.ias.settlement.domain.model.employee.Employee;
+import co.com.ias.settlement.domain.model.salaryhistory.SalaryHistory;
 import co.com.ias.settlement.domain.model.settelementinfo.SettlementInfo;
 import co.com.ias.settlement.domain.model.settlement.*;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -19,11 +21,11 @@ public class SettlementOperations {
     private static final Double DAYS_OF_YEAR = 360.0;
     private static final Double VACATIONS_PER_DAY = SettlementOperations.VACATION_DAYS_PER_YEAR / SettlementOperations.DAYS_OF_YEAR;
 
-    public static Settlement generateSettlement(Employee employee, SettlementInfo settlementInfo) {
+    public static Settlement generateSettlement(Employee employee, SettlementInfo settlementInfo, Double baseSalary) {
         return new Settlement(
                 null,
                 employee,
-                new TransportationAssistance(SettlementOperations.setTransportationAssistance(employee.getSalary().getValue())),
+                new TransportationAssistance(SettlementOperations.setTransportationAssistance(baseSalary)),
                 new FinalContractDate(settlementInfo.getFinalContractDate().getValue()),
                 new WithdrawalReason(settlementInfo.getWithdrawalReason().getValue()),
                 new WorkingDays(SettlementOperations.findWorkingDays(employee.getContractStartDate().getValue(),
@@ -32,22 +34,22 @@ public class SettlementOperations {
                 new VacationDays(SettlementOperations.findVacationDays(employee.getContractStartDate().getValue(),
                         settlementInfo.getFinalContractDate().getValue())),
                 new WorkingDaysLastSemester(SettlementOperations.findWorkingDaysLastSemester(settlementInfo.getFinalContractDate().getValue())),
-                new BaseSalary(SettlementOperations.findBaseSalary(employee.getSalary().getValue())),
-                new Severance(SettlementOperations.findSeverance(employee.getSalary().getValue(),
+                new BaseSalary(baseSalary),
+                new Severance(SettlementOperations.findSeverance(baseSalary,
                         employee.getContractStartDate().getValue()
                         , settlementInfo.getFinalContractDate().getValue())),
-                new Vacations(SettlementOperations.findVacations(employee.getSalary().getValue(),
+                new Vacations(SettlementOperations.findVacations(baseSalary,
                         employee.getContractStartDate().getValue(), settlementInfo.getFinalContractDate().getValue())),
-                new SeveranceInterest(SettlementOperations.findSeveranceInterests(employee.getSalary().getValue(),
+                new SeveranceInterest(SettlementOperations.findSeveranceInterests(baseSalary,
                         employee.getContractStartDate().getValue(), settlementInfo.getFinalContractDate().getValue())),
-                new ServiceBonus(SettlementOperations.findServiceBonus(employee.getSalary().getValue(),
+                new ServiceBonus(SettlementOperations.findServiceBonus(baseSalary,
                         settlementInfo.getFinalContractDate().getValue())),
-                new PayrollPayable(SettlementOperations.findPayrollPayable(employee.getSalary().getValue(),
+                new PayrollPayable(SettlementOperations.findPayrollPayable(baseSalary,
                         settlementInfo.getFinalContractDate().getValue())),
                 new Bonus(SettlementOperations.findBonus(settlementInfo.getWithdrawalReason().getValue(),
-                        employee.getSalary().getValue(), employee.getContractStartDate().getValue(),
+                        baseSalary, employee.getContractStartDate().getValue(),
                         settlementInfo.getFinalContractDate().getValue())),
-                new Total(SettlementOperations.findTotal(employee.getSalary().getValue(),
+                new Total(SettlementOperations.findTotal(baseSalary,
                         employee.getContractStartDate().getValue(), settlementInfo.getFinalContractDate().getValue(),
                         settlementInfo.getWithdrawalReason().getValue()))
         );
@@ -85,7 +87,8 @@ public class SettlementOperations {
         }
     }
 
-    public static Double findBaseSalary(Double employeeSalary) {
+    public static Double findBaseSalary(List<SalaryHistory> salaries) {
+        Double employeeSalary = salaries.stream().mapToDouble(e -> e.getNewSalary().getValue()).average().orElse(0.0);
         Double transportationAssistance = SettlementOperations.setTransportationAssistance(employeeSalary);
         if (transportationAssistance == 0.0) {
             return employeeSalary;
@@ -98,10 +101,9 @@ public class SettlementOperations {
         return employeeSalary * workingDays / DAYS_OF_YEAR;
     }
 
-    public static Double findVacations(Double employeeSalary, LocalDate startDate, LocalDate endDate) {
+    public static Double findVacations(Double baseSalary, LocalDate startDate, LocalDate endDate) {
         Double workingDays = Double.valueOf(findWorkingDays(startDate, endDate));
-        Double basicSalary = findBaseSalary(employeeSalary);
-        return basicSalary * workingDays / 720;
+        return baseSalary * workingDays / 720;
     }
 
     public static Double findSeveranceInterests(Double employeeSalary, LocalDate startDate, LocalDate endDate) {
@@ -110,14 +112,12 @@ public class SettlementOperations {
         return severance * workingDays * 0.12 / DAYS_OF_YEAR;
     }
 
-    public static Double findServiceBonus(Double employeeSalary, LocalDate endDate) {
+    public static Double findServiceBonus(Double baseSalary, LocalDate endDate) {
         Double workingDaysLastSemester = Double.valueOf(findWorkingDaysLastSemester(endDate));
-        Double baseSalary = findBaseSalary(employeeSalary);
         return workingDaysLastSemester * baseSalary / DAYS_OF_YEAR;
     }
 
-    public static Double findPayrollPayable(Double employeeSalary, LocalDate endDate) {
-        Double baseSalary = SettlementOperations.findBaseSalary(employeeSalary);
+    public static Double findPayrollPayable(Double baseSalary, LocalDate endDate) {
         Double SalaryPerDay = baseSalary / DAYS_OF_YEAR;
         LocalDate firstDayOfFortnight;
         if (endDate.getDayOfMonth() <= 15) {
@@ -130,9 +130,8 @@ public class SettlementOperations {
         return daysBetween * SalaryPerDay;
     }
 
-    public static Double findBonus(String withdrawalReason, Double employeeSalary, LocalDate startDate, LocalDate endDate) {
+    public static Double findBonus(String withdrawalReason, Double baseSalary, LocalDate startDate, LocalDate endDate) {
         if (withdrawalReason.equals("Injustified")) {
-            Double baseSalary = SettlementOperations.findBaseSalary(employeeSalary);
             Double worrkingYears = (double) Period.between(startDate, endDate).getYears();
             Double salaryPerDay = baseSalary / DAYS_OF_YEAR;
             if (worrkingYears > 1) {
@@ -152,4 +151,6 @@ public class SettlementOperations {
                 findSeveranceInterests(employeeSalary, startDate, endDate) + findServiceBonus(employeeSalary, endDate) + findPayrollPayable(employeeSalary,
                 endDate) + +findBonus(withdrawalReason, employeeSalary, startDate, endDate);
     }
+
+
 }

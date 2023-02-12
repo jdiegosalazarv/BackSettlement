@@ -7,6 +7,7 @@ import co.com.ias.settlement.infrastructure.adapters.jpa.entity.dbo.SalaryHistor
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -38,5 +39,12 @@ public class SalaryHistoryRepositoryAdapter implements ISalaryHistoryRepository 
         List<SalaryHistoryDBO> salaryHistoryBD =
                 this.iSalaryHistoryRepositoryAdapter.findByEmployee_IdentificationId(employeeId);
         return salaryHistoryBD.stream().map(SalaryHistoryDBO::toDomain).toList();
+    }
+
+    @Override
+    public List<SalaryHistory> findSalaryHistoryByEmployeeIdActualYear(String employeeId, LocalDate actualYear) {
+        List<SalaryHistoryDBO> salaries =
+                this.iSalaryHistoryRepositoryAdapter.findByEmployee_IdentificationIdAndUpdateSalaryDateGreaterThanEqual(employeeId, actualYear);
+        return salaries.stream().map(SalaryHistoryDBO::toDomain).toList();
     }
 }

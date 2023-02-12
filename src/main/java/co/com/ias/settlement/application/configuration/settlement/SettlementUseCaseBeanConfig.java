@@ -1,6 +1,7 @@
 package co.com.ias.settlement.application.configuration.settlement;
 
 import co.com.ias.settlement.domain.model.gateways.employee.IEmployeeRepository;
+import co.com.ias.settlement.domain.model.gateways.employeestate.IEmployeeStateRepository;
 import co.com.ias.settlement.domain.model.gateways.salaryhistory.ISalaryHistoryRepository;
 import co.com.ias.settlement.domain.model.gateways.settlement.ISettlementRepository;
 import co.com.ias.settlement.domain.usecase.settlement.SettlementUseCase;
@@ -11,9 +12,8 @@ import org.springframework.context.annotation.Configuration;
 public class SettlementUseCaseBeanConfig {
 
     @Bean
-    public SettlementUseCase settlementUseCase(ISettlementRepository iSettlementRepository,
-                                               IEmployeeRepository iEmployeeRepository,
-                                               ISalaryHistoryRepository iSalaryHistoryRepository) {
-        return new SettlementUseCase(iSettlementRepository, iEmployeeRepository, iSalaryHistoryRepository);
+    public SettlementUseCase settlementUseCase(ISettlementRepository iSettlementRepository, IEmployeeRepository iEmployeeRepository,
+                                               IEmployeeStateRepository iEmployeeStateRepository, ISalaryHistoryRepository iSalaryHistoryRepository) {
+        return new SettlementUseCase(iSettlementRepository, iEmployeeRepository, iEmployeeStateRepository, iSalaryHistoryRepository);
     }
 }
