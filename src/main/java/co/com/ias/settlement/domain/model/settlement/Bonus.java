@@ -1,10 +1,10 @@
 package co.com.ias.settlement.domain.model.settlement;
 
-public class VacationDays {
+public class Bonus {
 
     private final Double value;
 
-    public VacationDays(Double value) {
+    public Bonus(Double value) {
         this.value = value;
     }
 

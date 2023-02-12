@@ -16,7 +16,7 @@ public class Settlement {
 
     private final WorkingDays workingDays;
 
-    private final WorkingDarysActualYear workingDarysActualYear;
+    private final WorkingDaysActualYear workingDaysActualYear;
 
     private final VacationDays vacationDays;
 
@@ -34,20 +34,18 @@ public class Settlement {
 
     private final PayrollPayable payrollPayable;
 
+    private final Bonus bonus;
+
     private final Total total;
 
-    public Settlement(SettlementId id, Employee employee, TransportationAssistance transportationAssistance,
-                      FinalContractDate finalContractDate, WithdrawalReason withdrawalReason, WorkingDays workingDays,
-                      WorkingDarysActualYear workingDarysActualYear, VacationDays vacationDays, WorkingDaysLastSemester workingDaysLastSemester,
-                      BaseSalary baseSalary, Severance severance, Vacations vacations, SeveranceInterest severanceInterest, ServiceBonus serviceBonus,
-                      PayrollPayable payrollPayable, Total total) {
+    public Settlement(SettlementId id, Employee employee, TransportationAssistance transportationAssistance, FinalContractDate finalContractDate, WithdrawalReason withdrawalReason, WorkingDays workingDays, WorkingDaysActualYear workingDaysActualYear, VacationDays vacationDays, WorkingDaysLastSemester workingDaysLastSemester, BaseSalary baseSalary, Severance severance, Vacations vacations, SeveranceInterest severanceInterest, ServiceBonus serviceBonus, PayrollPayable payrollPayable, Bonus bonus, Total total) {
         this.id = id;
         this.employee = employee;
         this.transportationAssistance = transportationAssistance;
         this.finalContractDate = finalContractDate;
         this.withdrawalReason = withdrawalReason;
         this.workingDays = workingDays;
-        this.workingDarysActualYear = workingDarysActualYear;
+        this.workingDaysActualYear = workingDaysActualYear;
         this.vacationDays = vacationDays;
         this.workingDaysLastSemester = workingDaysLastSemester;
         this.baseSalary = baseSalary;
@@ -56,6 +54,7 @@ public class Settlement {
         this.severanceInterest = severanceInterest;
         this.serviceBonus = serviceBonus;
         this.payrollPayable = payrollPayable;
+        this.bonus = bonus;
         this.total = total;
     }
 
@@ -83,8 +82,8 @@ public class Settlement {
         return workingDays;
     }
 
-    public WorkingDarysActualYear getWorkingDarysActualYear() {
-        return workingDarysActualYear;
+    public WorkingDaysActualYear getWorkingDaysActualYear() {
+        return workingDaysActualYear;
     }
 
     public VacationDays getVacationDays() {
@@ -117,6 +116,10 @@ public class Settlement {
 
     public PayrollPayable getPayrollPayable() {
         return payrollPayable;
+    }
+
+    public Bonus getBonus() {
+        return bonus;
     }
 
     public Total getTotal() {
