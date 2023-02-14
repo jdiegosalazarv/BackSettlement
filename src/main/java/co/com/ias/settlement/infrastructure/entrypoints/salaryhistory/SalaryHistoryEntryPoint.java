@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/salaryhistory")
 @AllArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SalaryHistoryEntryPoint {
     private final SalaryHistoryUseCase salaryHistoryUseCase;
 

@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/employee")
 @AllArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmployeeEntryPoint {
     private final EmployeeUseCase employeeSaveUseCase;
 

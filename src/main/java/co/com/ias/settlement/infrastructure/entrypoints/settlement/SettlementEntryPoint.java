@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/settlement")
 @AllArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SettlementEntryPoint {
 
     private final SettlementUseCase settlementUseCase;

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/employeeState")
 @AllArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmployeeStateEntryPoint {
 
     private final EmployeeStateUseCase employeeStateUseCase;
