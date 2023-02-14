@@ -38,7 +38,8 @@ public class SalaryHistoryDTO {
                         salaryHistory.getEmployee().getIdentificationId().getValue(),
                         salaryHistory.getEmployee().getName().getValue(),
                         salaryHistory.getEmployee().getContractStartDate().getValue().format(Constants.FORMATTER),
-                        salaryHistory.getEmployee().getEmployeePosition().getValue(),
+                        (salaryHistory.getEmployee().getEmployeePosition() == null) ? null :
+                                salaryHistory.getEmployee().getEmployeePosition().getValue(),
                         salaryHistory.getEmployee().getSalary().getValue(),
                         (salaryHistory.getEmployee().getUpdateEmployDate() == null) ? null :
                                 salaryHistory.getEmployee().getUpdateEmployDate().getValue().format(Constants.FORMATTER),
