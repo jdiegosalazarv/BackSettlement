@@ -41,7 +41,8 @@ public class SalaryHistoryDBO {
                         new IdentificationId(salaryHistoryDBO.getEmployee().getIdentificationId()),
                         new EmployeeName(salaryHistoryDBO.getEmployee().getEmployeeName()),
                         new ContractStartDate(salaryHistoryDBO.getEmployee().getContractStartDate()),
-                        new EmployeePosition(salaryHistoryDBO.getEmployee().getEmployeePosition()),
+                        (salaryHistoryDBO.getEmployee().getEmployeePosition() == null) ? null :
+                                new EmployeePosition(salaryHistoryDBO.getEmployee().getEmployeePosition()),
                         new Salary(salaryHistoryDBO.getEmployee().getSalary()),
                         (salaryHistoryDBO.getEmployee().getUpdateEmployeeDate() == null) ? null :
                                 new UpdateEmployDate(salaryHistoryDBO.getEmployee().getUpdateEmployeeDate()),
@@ -62,7 +63,8 @@ public class SalaryHistoryDBO {
                         salaryHistory.getEmployee().getIdentificationId().getValue(),
                         salaryHistory.getEmployee().getName().getValue(),
                         salaryHistory.getEmployee().getContractStartDate().getValue(),
-                        salaryHistory.getEmployee().getEmployeePosition().getValue(),
+                        (salaryHistory.getEmployee().getEmployeePosition() == null) ? null :
+                                salaryHistory.getEmployee().getEmployeePosition().getValue(),
                         salaryHistory.getEmployee().getSalary().getValue(),
                         (salaryHistory.getEmployee().getUpdateEmployDate() == null) ? null :
                                 salaryHistory.getEmployee().getUpdateEmployDate().getValue(),

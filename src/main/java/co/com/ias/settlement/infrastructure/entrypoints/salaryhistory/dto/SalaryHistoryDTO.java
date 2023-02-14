@@ -5,6 +5,7 @@ import co.com.ias.settlement.domain.model.salaryhistory.SalaryHistory;
 import co.com.ias.settlement.domain.model.salaryhistory.UpdateSalaryDate;
 import co.com.ias.settlement.infrastructure.entrypoints.employee.dto.EmployeeDTO;
 import co.com.ias.settlement.infrastructure.entrypoints.employeestate.dto.EmployeeStateDTO;
+import co.com.ias.settlement.infrastructure.utils.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,11 +37,11 @@ public class SalaryHistoryDTO {
                 new EmployeeDTO(
                         salaryHistory.getEmployee().getIdentificationId().getValue(),
                         salaryHistory.getEmployee().getName().getValue(),
-                        salaryHistory.getEmployee().getContractStartDate().getValue(),
+                        salaryHistory.getEmployee().getContractStartDate().getValue().format(Constants.FORMATTER),
                         salaryHistory.getEmployee().getEmployeePosition().getValue(),
                         salaryHistory.getEmployee().getSalary().getValue(),
                         (salaryHistory.getEmployee().getUpdateEmployDate() == null) ? null :
-                                salaryHistory.getEmployee().getUpdateEmployDate().getValue(),
+                                salaryHistory.getEmployee().getUpdateEmployDate().getValue().format(Constants.FORMATTER),
                         new EmployeeStateDTO(
                                 salaryHistory.getEmployee().getEmployeeState().getStateId().getValue(),
                                 salaryHistory.getEmployee().getEmployeeState().getStateName().getValue()

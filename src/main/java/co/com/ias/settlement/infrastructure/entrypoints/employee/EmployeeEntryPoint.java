@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class EmployeeEntryPoint {
 
 
     @PostMapping
-    public ResponseEntity<?> saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<?> saveEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) {
 
         Employee employee = EmployeeDTO.toDomain(employeeDTO);
         Employee employee1 = this.employeeSaveUseCase.saveEmployee(employee);

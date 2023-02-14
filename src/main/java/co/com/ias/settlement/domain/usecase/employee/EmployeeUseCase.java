@@ -33,9 +33,15 @@ public class EmployeeUseCase {
 
     public Employee saveEmployee(Employee employee) {
         EmployeeState employeeState = new EmployeeState(new StateId(this.EMPLOYEE_STATE_ID), new StateName(this.EMPLOYEE_STATE_NAME));
-        Employee employee1 = new Employee(employee.getIdentificationId(), employee.getName(),
-                employee.getContractStartDate(), employee.getEmployeePosition(), employee.getSalary(),
-                employee.getUpdateEmployDate(), employeeState);
+        Employee employee1 = new Employee(
+                employee.getIdentificationId(),
+                employee.getName(),
+                employee.getContractStartDate(),
+                (employee.getEmployeePosition() == null) ? null : employee.getEmployeePosition(),
+                employee.getSalary(),
+                employee.getUpdateEmployDate(), employeeState
+        );
+
         SalaryHistory salaryHistory = new SalaryHistory(
                 new NewSalary(employee.getSalary().getValue()),
                 new UpdateSalaryDate(employee.getContractStartDate().getValue()),
@@ -56,11 +62,14 @@ public class EmployeeUseCase {
 
     public Employee updateEmployee(Employee employee) {
         Employee employeeBD = this.iEmployeeRepository.findEmployeeById(employee.getIdentificationId().getValue());
+        if (employee.getSalary().getValue() < employeeBD.getSalary().getValue()) {
+            throw new IllegalArgumentException("El salario debe ser mayor que el actual");
+        }
         Employee newEmployee = new Employee(
                 employeeBD.getIdentificationId(),
                 employeeBD.getName(),
                 employeeBD.getContractStartDate(),
-                employee.getEmployeePosition(),
+                (employee.getEmployeePosition() == null) ? null : employee.getEmployeePosition(),
                 employee.getSalary(),
                 employee.getUpdateEmployDate(),
                 employeeBD.getEmployeeState()

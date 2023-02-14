@@ -41,7 +41,8 @@ public class EmployeeDBO {
                 new IdentificationId(employeeDBO.getIdentificationId()),
                 new EmployeeName(employeeDBO.getEmployeeName()),
                 new ContractStartDate(employeeDBO.getContractStartDate()),
-                new EmployeePosition(employeeDBO.getEmployeePosition()),
+                (employeeDBO.getEmployeePosition() == null) ? null :
+                        new EmployeePosition(employeeDBO.getEmployeePosition()),
                 new Salary(employeeDBO.getSalary()),
                 (employeeDBO.getUpdateEmployeeDate() == null) ? null :
                         new UpdateEmployDate(employeeDBO.getUpdateEmployeeDate()),
@@ -57,7 +58,7 @@ public class EmployeeDBO {
                 employee.getIdentificationId().getValue(),
                 employee.getName().getValue(),
                 employee.getContractStartDate().getValue(),
-                employee.getEmployeePosition().getValue(),
+                (employee.getEmployeePosition() == null) ? null : employee.getEmployeePosition().getValue(),
                 employee.getSalary().getValue(),
                 (employee.getUpdateEmployDate() == null) ? null : employee.getUpdateEmployDate().getValue(),
                 new EmployeeStateDBO(

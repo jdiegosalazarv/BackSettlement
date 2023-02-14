@@ -63,7 +63,8 @@ public class SettlementDBO {
                         new IdentificationId(settlementDBO.getEmployeeDBO().getIdentificationId()),
                         new EmployeeName(settlementDBO.getEmployeeDBO().getEmployeeName()),
                         new ContractStartDate(settlementDBO.getEmployeeDBO().getContractStartDate()),
-                        new EmployeePosition(settlementDBO.getEmployeeDBO().getEmployeePosition()),
+                        (settlementDBO.getEmployeeDBO().getEmployeePosition() == null) ? null :
+                                new EmployeePosition(settlementDBO.getEmployeeDBO().getEmployeePosition()),
                         new Salary(settlementDBO.getEmployeeDBO().getSalary()),
                         (settlementDBO.getEmployeeDBO().getUpdateEmployeeDate() == null) ? null :
                                 new UpdateEmployDate(settlementDBO.getEmployeeDBO().getUpdateEmployeeDate()),
@@ -97,7 +98,8 @@ public class SettlementDBO {
                         settlement.getEmployee().getIdentificationId().getValue(),
                         settlement.getEmployee().getName().getValue(),
                         settlement.getEmployee().getContractStartDate().getValue(),
-                        settlement.getEmployee().getEmployeePosition().getValue(),
+                        (settlement.getEmployee().getEmployeePosition() == null) ? null :
+                                settlement.getEmployee().getEmployeePosition().getValue(),
                         settlement.getEmployee().getSalary().getValue(),
                         (settlement.getEmployee().getUpdateEmployDate() == null) ? null :
                                 settlement.getEmployee().getUpdateEmployDate().getValue(),

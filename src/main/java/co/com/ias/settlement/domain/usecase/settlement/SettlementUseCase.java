@@ -34,27 +34,35 @@ public class SettlementUseCase {
     public Settlement saveSettlement(SettlementInfo settlementInfo) {
         String employeeId = settlementInfo.getEmployeeId().getValue();
         Employee employee = this.iEmployeeRepository.findEmployeeById(employeeId);
+
         if (employee.getEmployeeState().getStateId().getValue() == EMPLOYEE_STATE_INACTIVE) {
             throw new IllegalArgumentException("El empleado con id: " + employeeId + " no está Activo");
         }
+
         List<SalaryHistory> salariesActualYear =
                 this.iSalaryHistoryRepository.findSalaryHistoryByEmployeeIdActualYear(employee.getIdentificationId().getValue(),
                         (employee.getUpdateEmployDate() == null) ?
                                 employee.getContractStartDate().getValue() :
                                 LocalDate.ofEpochDay(employee.getUpdateEmployDate().getValue().getYear()));
+
         Double baseSalary = SettlementOperations.findBaseSalary(salariesActualYear);
         EmployeeState employeeState = this.iEmployeeStateRepository.findByIdEmployeeState(EMPLOYEE_STATE_INACTIVE);
         Employee employeeModified = new Employee(
                 employee.getIdentificationId(),
                 employee.getName(),
                 employee.getContractStartDate(),
-                employee.getEmployeePosition(),
+                (employee.getEmployeePosition() == null) ? null : employee.getEmployeePosition(),
                 employee.getSalary(),
                 new UpdateEmployDate(LocalDate.now()),
                 employeeState
         );
+
         Employee employeeUpdated = this.iEmployeeRepository.updateEmployee(employeeModified);
         Settlement settlement = SettlementOperations.generateSettlement(employeeUpdated, settlementInfo, baseSalary);
         return this.iSettlementRepository.saveSattlement(settlement);
+    }
+
+    public List<Settlement> findAllSettlements() {
+        return this.iSettlementRepository.findAllSettlements();
     }
 }

@@ -7,10 +7,10 @@ import co.com.ias.settlement.infrastructure.entrypoints.settlement.dto.Settlemen
 import co.com.ias.settlement.infrastructure.entrypoints.settlement.dto.SettlementInfoDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/settlement")
@@ -20,10 +20,17 @@ public class SettlementEntryPoint {
     private final SettlementUseCase settlementUseCase;
 
     @PostMapping
-    public ResponseEntity<?> saveSettlement(@RequestBody SettlementInfoDTO settlementInfoDTO) {
+    public ResponseEntity<?> saveSettlement(@RequestBody @Valid SettlementInfoDTO settlementInfoDTO) {
         SettlementInfo settlementInfo = SettlementInfoDTO.toDomain(settlementInfoDTO);
         Settlement settlementInfoSaved = this.settlementUseCase.saveSettlement(settlementInfo);
         SettlementDTO settlementDTO = SettlementDTO.fromDomain(settlementInfoSaved);
         return ResponseEntity.status(201).body(settlementDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllSettlements() {
+        List<Settlement> settlementList = this.settlementUseCase.findAllSettlements();
+        List<SettlementDTO> settlementDTOList = settlementList.stream().map(SettlementDTO::fromDomain).toList();
+        return ResponseEntity.status(200).body(settlementDTOList);
     }
 }

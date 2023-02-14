@@ -3,12 +3,11 @@ package co.com.ias.settlement.infrastructure.entrypoints.settlement.dto;
 import co.com.ias.settlement.domain.model.settlement.Settlement;
 import co.com.ias.settlement.infrastructure.entrypoints.employee.dto.EmployeeDTO;
 import co.com.ias.settlement.infrastructure.entrypoints.employeestate.dto.EmployeeStateDTO;
+import co.com.ias.settlement.infrastructure.utils.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +20,7 @@ public class SettlementDTO {
 
     private Double transportationAssistance;
 
-    private LocalDate finalContractDate;
+    private String finalContractDate;
 
     private String withdrawalReason;
 
@@ -55,18 +54,19 @@ public class SettlementDTO {
                 new EmployeeDTO(
                         settlement.getEmployee().getIdentificationId().getValue(),
                         settlement.getEmployee().getName().getValue(),
-                        settlement.getEmployee().getContractStartDate().getValue(),
-                        settlement.getEmployee().getEmployeePosition().getValue(),
+                        settlement.getEmployee().getContractStartDate().getValue().format(Constants.FORMATTER),
+                        (settlement.getEmployee().getEmployeePosition() == null) ? null :
+                                settlement.getEmployee().getEmployeePosition().getValue(),
                         settlement.getEmployee().getSalary().getValue(),
                         (settlement.getEmployee().getUpdateEmployDate() == null) ? null :
-                                settlement.getEmployee().getUpdateEmployDate().getValue(),
+                                settlement.getEmployee().getUpdateEmployDate().getValue().format(Constants.FORMATTER),
                         new EmployeeStateDTO(
                                 settlement.getEmployee().getEmployeeState().getStateId().getValue(),
                                 settlement.getEmployee().getEmployeeState().getStateName().getValue()
                         )
                 ),
                 settlement.getTransportationAssistance().getValue(),
-                settlement.getFinalContractDate().getValue(),
+                settlement.getFinalContractDate().getValue().format(Constants.FORMATTER),
                 settlement.getWithdrawalReason().getValue(),
                 settlement.getWorkingDays().getValue(),
                 settlement.getWorkingDaysActualYear().getValue(),
