@@ -10,6 +10,7 @@ import co.com.ias.settlement.domain.model.gateways.salaryhistory.ISalaryHistoryR
 import co.com.ias.settlement.domain.model.salaryhistory.NewSalary;
 import co.com.ias.settlement.domain.model.salaryhistory.SalaryHistory;
 import co.com.ias.settlement.domain.model.salaryhistory.UpdateSalaryDate;
+import co.com.ias.settlement.domain.model.updateemployee.UpdateEmployee;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -60,7 +61,7 @@ public class EmployeeUseCase {
         return this.iEmployeeRepository.findEmployeeById(id);
     }
 
-    public Employee updateEmployee(Employee employee) {
+    public Employee updateEmployee(UpdateEmployee employee) {
         Employee employeeBD = this.iEmployeeRepository.findEmployeeById(employee.getIdentificationId().getValue());
         if (employee.getSalary().getValue() < employeeBD.getSalary().getValue()) {
             throw new IllegalArgumentException("El salario debe ser mayor que el actual");

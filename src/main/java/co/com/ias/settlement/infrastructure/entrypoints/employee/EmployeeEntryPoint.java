@@ -1,8 +1,10 @@
 package co.com.ias.settlement.infrastructure.entrypoints.employee;
 
 import co.com.ias.settlement.domain.model.employee.Employee;
+import co.com.ias.settlement.domain.model.updateemployee.UpdateEmployee;
 import co.com.ias.settlement.domain.usecase.employee.EmployeeUseCase;
 import co.com.ias.settlement.infrastructure.entrypoints.employee.dto.EmployeeDTO;
+import co.com.ias.settlement.infrastructure.entrypoints.employee.dto.UpdateEmployeeDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,9 +42,9 @@ public class EmployeeEntryPoint {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        Employee employee = EmployeeDTO.toDomain(employeeDTO);
-        Employee employee1 = this.employeeSaveUseCase.updateEmployee(employee);
+    public ResponseEntity<?> updateEmployee(@RequestBody @Valid UpdateEmployeeDTO updateEmployeeDTO) {
+        UpdateEmployee updateEmployee = UpdateEmployeeDTO.toDomain(updateEmployeeDTO);
+        Employee employee1 = this.employeeSaveUseCase.updateEmployee(updateEmployee);
         EmployeeDTO employeeDTO1 = EmployeeDTO.fromDomain(employee1);
         return ResponseEntity.status(200).body(employeeDTO1);
     }
