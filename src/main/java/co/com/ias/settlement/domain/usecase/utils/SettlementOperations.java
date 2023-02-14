@@ -12,12 +12,10 @@ import java.util.List;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class SettlementOperations {
-
-    private static final Double MINIMUM_WAGE = 1160000.0;
+    public static final Double MINIMUM_WAGE = 1160000.0;
+    public static final Double MAXIMUM_WAGE = 7000000.0;
     private static final Double TRANSPORTATION_ASSISTANCE = 102854.0;
-
     private static final Double VACATION_DAYS_PER_YEAR = 15.0;
-
     private static final Double DAYS_OF_YEAR = 360.0;
     private static final Double VACATIONS_PER_DAY = SettlementOperations.VACATION_DAYS_PER_YEAR / SettlementOperations.DAYS_OF_YEAR;
 
