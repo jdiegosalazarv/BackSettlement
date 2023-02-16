@@ -40,7 +40,8 @@ public class UpdateEmployeeDTO {
     public static UpdateEmployee toDomain(UpdateEmployeeDTO updateEmployeeDTO) {
         return new UpdateEmployee(
                 new IdentificationId(updateEmployeeDTO.getIdentificationId()),
-                new EmployeePosition(updateEmployeeDTO.getEmployeePosition()),
+                (updateEmployeeDTO.getEmployeePosition() == null) ? null :
+                        new EmployeePosition(updateEmployeeDTO.getEmployeePosition()),
                 new Salary(updateEmployeeDTO.getSalary()),
                 new UpdateEmployDate(LocalDate.parse(updateEmployeeDTO.getUpdateEmployeeDate(), Constants.FORMATTER))
         );
