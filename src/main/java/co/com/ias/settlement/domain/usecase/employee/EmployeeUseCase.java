@@ -66,6 +66,15 @@ public class EmployeeUseCase {
         if (employee.getSalary().getValue() < employeeBD.getSalary().getValue()) {
             throw new IllegalArgumentException("El salario debe ser mayor que el actual");
         }
+
+        if (employeeBD.getUpdateEmployDate() == null) {
+            if (employee.getUpdateEmployDate().getValue().isBefore(employeeBD.getContractStartDate().getValue())) {
+                throw new IllegalArgumentException("La fecha de la actualización debe ser posterior a la fecha de contratación");
+            }
+        } else if (employee.getUpdateEmployDate().getValue().isBefore(employeeBD.getUpdateEmployDate().getValue())) {
+            throw new IllegalArgumentException("La fecha de actualización debe ser posterior a la ultima modificación");
+        }
+
         Employee newEmployee = new Employee(
                 employeeBD.getIdentificationId(),
                 employeeBD.getName(),
