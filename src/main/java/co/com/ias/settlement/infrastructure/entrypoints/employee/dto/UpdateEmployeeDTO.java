@@ -34,6 +34,7 @@ public class UpdateEmployeeDTO {
 
     @Pattern(regexp = "^\\d{4}\\/(0[1-9]|1[0-9]|2[0-9]|3[0-1])\\/(0[1-9]|1[0-2])$", message = "La fecha debe cumplir con" +
             " el formato yyyy/dd/MM")
+    @NotBlank(message = "La fecha no puede estar vacía")
     private String updateEmployeeDate;
 
     public static UpdateEmployee toDomain(UpdateEmployeeDTO updateEmployeeDTO) {
