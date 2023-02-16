@@ -24,7 +24,7 @@ public class SettlementDBO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @OneToOne
     private EmployeeDBO employeeDBO;
 
     private Double transportationAssistance;
