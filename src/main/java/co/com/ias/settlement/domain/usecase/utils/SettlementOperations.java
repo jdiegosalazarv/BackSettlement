@@ -28,10 +28,10 @@ public class SettlementOperations {
                 new WithdrawalReason(settlementInfo.getWithdrawalReason().getValue()),
                 new WorkingDays(SettlementOperations.findWorkingDays(employee.getContractStartDate().getValue(),
                         settlementInfo.getFinalContractDate().getValue())),
-                new WorkingDaysActualYear(SettlementOperations.findWorkingDaysLastYear(settlementInfo.getFinalContractDate().getValue())),
+                new WorkingDaysActualYear(SettlementOperations.findWorkingDaysLastYear(employee.getContractStartDate().getValue(), settlementInfo.getFinalContractDate().getValue())),
                 new VacationDays(SettlementOperations.findVacationDays(employee.getContractStartDate().getValue(),
                         settlementInfo.getFinalContractDate().getValue())),
-                new WorkingDaysLastSemester(SettlementOperations.findWorkingDaysLastSemester(settlementInfo.getFinalContractDate().getValue())),
+                new WorkingDaysLastSemester(SettlementOperations.findWorkingDaysLastSemester(employee.getContractStartDate().getValue(), settlementInfo.getFinalContractDate().getValue())),
                 new BaseSalary(baseSalary),
                 new Severance(SettlementOperations.findSeverance(baseSalary,
                         employee.getContractStartDate().getValue()
@@ -41,6 +41,7 @@ public class SettlementOperations {
                 new SeveranceInterest(SettlementOperations.findSeveranceInterests(baseSalary,
                         employee.getContractStartDate().getValue(), settlementInfo.getFinalContractDate().getValue())),
                 new ServiceBonus(SettlementOperations.findServiceBonus(baseSalary,
+                        employee.getContractStartDate().getValue(),
                         settlementInfo.getFinalContractDate().getValue())),
                 new PayrollPayable(SettlementOperations.findPayrollPayable(baseSalary,
                         settlementInfo.getFinalContractDate().getValue())),
@@ -64,7 +65,10 @@ public class SettlementOperations {
         return (int) DAYS.between(startDate, endDate) + 1;
     }
 
-    public static Integer findWorkingDaysLastYear(LocalDate endDate) {
+    public static Integer findWorkingDaysLastYear(LocalDate startDate, LocalDate endDate) {
+        if (startDate.getYear() == endDate.getYear()) {
+            return findWorkingDays(startDate, endDate);
+        }
         LocalDate firstDayOfYear = endDate.withDayOfYear(1);
         return (int) DAYS.between(firstDayOfYear, endDate) + 1;
     }
@@ -74,7 +78,12 @@ public class SettlementOperations {
         return workingDays * VACATIONS_PER_DAY;
     }
 
-    public static Integer findWorkingDaysLastSemester(LocalDate endDate) {
+    public static Integer findWorkingDaysLastSemester(LocalDate startDate, LocalDate endDate) {
+        if (startDate.getYear() == endDate.getYear()) {
+            if (startDate.getMonthValue() <= 6 && endDate.getMonthValue() <= 6 || startDate.getMonthValue() > 6 && endDate.getMonthValue() > 6) {
+                return findWorkingDays(startDate, endDate);
+            }
+        }
         LocalDate firstDayOfSemester;
         if (endDate.getMonthValue() <= 6) {
             firstDayOfSemester = endDate.withMonth(1).withDayOfMonth(1);
@@ -110,8 +119,8 @@ public class SettlementOperations {
         return severance * workingDays * 0.12 / DAYS_OF_YEAR;
     }
 
-    public static Double findServiceBonus(Double baseSalary, LocalDate endDate) {
-        Double workingDaysLastSemester = Double.valueOf(findWorkingDaysLastSemester(endDate));
+    public static Double findServiceBonus(Double baseSalary, LocalDate startDate, LocalDate endDate) {
+        Double workingDaysLastSemester = Double.valueOf(findWorkingDaysLastSemester(startDate, endDate));
         return workingDaysLastSemester * baseSalary / DAYS_OF_YEAR;
     }
 
@@ -146,7 +155,8 @@ public class SettlementOperations {
 
     public static Double findTotal(Double employeeSalary, LocalDate startDate, LocalDate endDate, String withdrawalReason) {
         return findSeverance(employeeSalary, startDate, endDate) + findVacations(employeeSalary, startDate, endDate) +
-                findSeveranceInterests(employeeSalary, startDate, endDate) + findServiceBonus(employeeSalary, endDate) + findPayrollPayable(employeeSalary,
+                findSeveranceInterests(employeeSalary, startDate, endDate) + findServiceBonus(employeeSalary,
+                startDate, endDate) + findPayrollPayable(employeeSalary,
                 endDate) + +findBonus(withdrawalReason, employeeSalary, startDate, endDate);
     }
 
