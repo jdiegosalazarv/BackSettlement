@@ -17,6 +17,7 @@ public class SettlementOperations {
     private static final Double TRANSPORTATION_ASSISTANCE = 102854.0;
     private static final Double VACATION_DAYS_PER_YEAR = 15.0;
     private static final Double DAYS_OF_YEAR = 360.0;
+    private static final Double DAYS_OF_MONTH = 30.0;
     private static final Double VACATIONS_PER_DAY = SettlementOperations.VACATION_DAYS_PER_YEAR / SettlementOperations.DAYS_OF_YEAR;
 
     public static Settlement generateSettlement(Employee employee, SettlementInfo settlementInfo, Double baseSalary) {
@@ -125,7 +126,7 @@ public class SettlementOperations {
     }
 
     public static Double findPayrollPayable(Double baseSalary, LocalDate endDate) {
-        Double SalaryPerDay = baseSalary / DAYS_OF_YEAR;
+        Double SalaryPerDay = baseSalary / DAYS_OF_MONTH;
         LocalDate firstDayOfFortnight;
         if (endDate.getDayOfMonth() <= 15) {
             firstDayOfFortnight = endDate.withDayOfMonth(1);
@@ -133,7 +134,7 @@ public class SettlementOperations {
             firstDayOfFortnight = endDate.withDayOfMonth(16);
         }
 
-        Double daysBetween = (double) DAYS.between(firstDayOfFortnight, endDate);
+        Double daysBetween = (double) DAYS.between(firstDayOfFortnight, endDate) + 1;
         return daysBetween * SalaryPerDay;
     }
 
