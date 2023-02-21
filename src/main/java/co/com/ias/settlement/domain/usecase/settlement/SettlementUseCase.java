@@ -39,6 +39,16 @@ public class SettlementUseCase {
             throw new IllegalArgumentException("El empleado con id: " + employeeId + " no está Activo");
         }
 
+        if (employee.getUpdateEmployDate() == null) {
+            if (employee.getContractStartDate().getValue().isAfter(settlementInfo.getFinalContractDate().getValue())) {
+                throw new IllegalArgumentException("La fecha de finalización de contrato debe ser posterior a la " +
+                        "fecha de contratación del empleado");
+            }
+        } else if (employee.getUpdateEmployDate().getValue().isAfter(settlementInfo.getFinalContractDate().getValue())) {
+            throw new IllegalArgumentException("La fecha de finalización de contrato debe ser posterior a la " +
+                    "fecha de actualización del empleado");
+        }
+
         List<SalaryHistory> salariesActualYear =
                 this.iSalaryHistoryRepository.findSalaryHistoryByEmployeeIdActualYear(employee.getIdentificationId().getValue(),
                         (employee.getUpdateEmployDate() == null) ?
