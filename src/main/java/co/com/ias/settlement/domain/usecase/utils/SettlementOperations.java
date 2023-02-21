@@ -105,7 +105,7 @@ public class SettlementOperations {
     }
 
     public static Double findSeverance(Double employeeSalary, LocalDate startDate, LocalDate endDate) {
-        Double workingDays = Double.valueOf(findWorkingDays(startDate, endDate));
+        Double workingDays = Double.valueOf(findWorkingDaysLastYear(startDate, endDate));
         return employeeSalary * workingDays / DAYS_OF_YEAR;
     }
 
@@ -116,7 +116,7 @@ public class SettlementOperations {
 
     public static Double findSeveranceInterests(Double employeeSalary, LocalDate startDate, LocalDate endDate) {
         Double severance = SettlementOperations.findSeverance(employeeSalary, startDate, endDate);
-        Double workingDays = Double.valueOf(SettlementOperations.findWorkingDays(startDate, endDate));
+        Double workingDays = Double.valueOf(SettlementOperations.findWorkingDaysLastYear(startDate, endDate));
         return severance * workingDays * 0.12 / DAYS_OF_YEAR;
     }
 
