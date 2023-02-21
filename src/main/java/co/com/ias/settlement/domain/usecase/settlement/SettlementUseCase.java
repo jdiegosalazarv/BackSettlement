@@ -49,13 +49,18 @@ public class SettlementUseCase {
                     "fecha de actualización del empleado");
         }
 
-        List<SalaryHistory> salariesActualYear =
-                this.iSalaryHistoryRepository.findSalaryHistoryByEmployeeIdActualYear(employee.getIdentificationId().getValue(),
-                        (employee.getUpdateEmployDate() == null) ?
-                                employee.getContractStartDate().getValue() :
-                                LocalDate.ofEpochDay(employee.getUpdateEmployDate().getValue().getYear()));
+        Double baseSalary = 0.0;
+        if (employee.getUpdateEmployDate() == null || employee.getUpdateEmployDate().getValue().getYear() == settlementInfo.getFinalContractDate().getValue().getYear()) {
+            List<SalaryHistory> salariesActualYear =
+                    this.iSalaryHistoryRepository.findSalaryHistoryByEmployeeIdActualYear(employee.getIdentificationId().getValue(),
+                            (employee.getUpdateEmployDate() == null) ?
+                                    employee.getContractStartDate().getValue() :
+                                    LocalDate.ofEpochDay(employee.getUpdateEmployDate().getValue().getYear()));
+            baseSalary = SettlementOperations.findBaseSalary(salariesActualYear);
+        } else {
+            baseSalary = employee.getSalary().getValue();
+        }
 
-        Double baseSalary = SettlementOperations.findBaseSalary(salariesActualYear);
         EmployeeState employeeState = this.iEmployeeStateRepository.findByIdEmployeeState(EMPLOYEE_STATE_INACTIVE);
         Employee employeeModified = new Employee(
                 employee.getIdentificationId(),
