@@ -58,7 +58,7 @@ public class SettlementUseCase {
                                     LocalDate.ofEpochDay(employee.getUpdateEmployDate().getValue().getYear()));
             baseSalary = SettlementOperations.findBaseSalary(salariesActualYear);
         } else {
-            baseSalary = employee.getSalary().getValue();
+            baseSalary = employee.getSalary().getValue() + SettlementOperations.setTransportationAssistance(employee.getSalary().getValue());
         }
 
         EmployeeState employeeState = this.iEmployeeStateRepository.findByIdEmployeeState(EMPLOYEE_STATE_INACTIVE);
