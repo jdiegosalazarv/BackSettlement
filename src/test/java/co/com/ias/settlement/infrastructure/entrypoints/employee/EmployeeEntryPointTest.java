@@ -64,7 +64,7 @@ class EmployeeEntryPointTest {
     }
 
     @Test
-    @DisplayName("Guardar empleado ok")
+    @DisplayName("Save employee ok")
     void saveEmployee() throws Exception {
         when(this.employeeUseCase.saveEmployee(any(Employee.class))).thenReturn(employee);
 
@@ -78,7 +78,14 @@ class EmployeeEntryPointTest {
     }
 
     @Test
-    void findEmployeeById() {
+    @DisplayName("Find employee ok")
+    void findEmployeeById() throws Exception {
+        when(this.employeeUseCase.findEmployeByid(any(String.class))).thenReturn(employee);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/employee/{id}", "1234567"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(content().string(containsString(employeeDTO.getIdentificationId())))
+                .andExpect(content().string(containsString(employeeDTO.getEmployeePosition())));
     }
 
     @Test
