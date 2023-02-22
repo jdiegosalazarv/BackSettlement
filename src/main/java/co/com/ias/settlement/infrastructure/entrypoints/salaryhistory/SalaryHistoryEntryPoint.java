@@ -16,15 +16,6 @@ import java.util.List;
 public class SalaryHistoryEntryPoint {
     private final SalaryHistoryUseCase salaryHistoryUseCase;
 
-    @PostMapping
-    public ResponseEntity<?> saveSalaryHistory(@RequestBody SalaryHistoryDTO salaryHistoryDTO) {
-        SalaryHistory salaryHistory = SalaryHistoryDTO.toDomain(salaryHistoryDTO);
-        String employeeId = salaryHistoryDTO.getEmployee().getIdentificationId();
-        SalaryHistoryDTO salaryHistorySaved =
-                SalaryHistoryDTO.fromDomain(this.salaryHistoryUseCase.saveSalaryHistory(salaryHistory, employeeId));
-        return ResponseEntity.status(201).body(salaryHistorySaved);
-    }
-
     @GetMapping
     public ResponseEntity<?> getSalaryHistories() {
         List<SalaryHistory> salaryHistories = this.salaryHistoryUseCase.getSalariesHistory();

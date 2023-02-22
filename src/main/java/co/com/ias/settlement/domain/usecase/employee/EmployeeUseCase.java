@@ -5,7 +5,6 @@ import co.com.ias.settlement.domain.model.employeestate.EmployeeState;
 import co.com.ias.settlement.domain.model.employeestate.StateId;
 import co.com.ias.settlement.domain.model.employeestate.StateName;
 import co.com.ias.settlement.domain.model.gateways.employee.IEmployeeRepository;
-import co.com.ias.settlement.domain.model.gateways.employeestate.IEmployeeStateRepository;
 import co.com.ias.settlement.domain.model.gateways.salaryhistory.ISalaryHistoryRepository;
 import co.com.ias.settlement.domain.model.salaryhistory.NewSalary;
 import co.com.ias.settlement.domain.model.salaryhistory.SalaryHistory;
@@ -19,16 +18,13 @@ public class EmployeeUseCase {
 
     private final IEmployeeRepository iEmployeeRepository;
 
-    private final IEmployeeStateRepository iEmployeeStateRepository;
-
     private final ISalaryHistoryRepository iSalaryHistoryRepository;
 
     private final Integer EMPLOYEE_STATE_ID = 1;
     private final String EMPLOYEE_STATE_NAME = "Activo";
 
-    public EmployeeUseCase(IEmployeeRepository iEmployeeRepository, IEmployeeStateRepository iEmployeeStateRepository, ISalaryHistoryRepository iSalaryHistoryRepository) {
+    public EmployeeUseCase(IEmployeeRepository iEmployeeRepository, ISalaryHistoryRepository iSalaryHistoryRepository) {
         this.iEmployeeRepository = iEmployeeRepository;
-        this.iEmployeeStateRepository = iEmployeeStateRepository;
         this.iSalaryHistoryRepository = iSalaryHistoryRepository;
     }
 
@@ -40,7 +36,8 @@ public class EmployeeUseCase {
                 employee.getContractStartDate(),
                 (employee.getEmployeePosition() == null) ? null : employee.getEmployeePosition(),
                 employee.getSalary(),
-                employee.getUpdateEmployDate(), employeeState
+                employee.getUpdateEmployDate(),
+                employeeState
         );
 
         SalaryHistory salaryHistory = new SalaryHistory(
@@ -87,11 +84,7 @@ public class EmployeeUseCase {
         SalaryHistory salaryHistory = new SalaryHistory(new NewSalary(newEmployee.getSalary().getValue()),
                 new UpdateSalaryDate(LocalDate.now()), newEmployee);
         Employee employeeUpdated = this.iEmployeeRepository.updateEmployee(newEmployee);
-        this.iSalaryHistoryRepository.updateSalaryHistory(salaryHistory);
+        this.iSalaryHistoryRepository.saveSalaryHistory(salaryHistory);
         return employeeUpdated;
-    }
-
-    public void deleteEmployee(String id) {
-        this.iEmployeeRepository.deleteEmployee(id);
     }
 }
