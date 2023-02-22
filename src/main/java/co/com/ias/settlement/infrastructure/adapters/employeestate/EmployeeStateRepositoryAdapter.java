@@ -30,4 +30,6 @@ public class EmployeeStateRepositoryAdapter implements IEmployeeStateRepository 
         }
         return EmployeeStateDBO.toDomain(employeeStateDBO.get());
     }
+
+
 }

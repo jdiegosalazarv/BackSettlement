@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -68,7 +69,7 @@ class EmployeeRepositoryAdapterTest {
     }
 
     @Test
-    @DisplayName("caso exito guardar un empleado")
+    @DisplayName("Save employee ok")
     void saveEmployee() {
         Employee employeeSaved = this.employeeRepositoryAdapter.saveEmployee(employee);
 
@@ -76,6 +77,7 @@ class EmployeeRepositoryAdapterTest {
     }
 
     @Test
+    @DisplayName("find employee by identification id ok")
     void findEmployeeById() {
         Employee employeeSaved = this.employeeRepositoryAdapter.findEmployeeById("1234567");
 
@@ -83,14 +85,31 @@ class EmployeeRepositoryAdapterTest {
     }
 
     @Test
+    @DisplayName("find employees ok")
     void findEmployees() {
+        List<Employee> employees = this.employeeRepositoryAdapter.findEmployees();
+
+        Assertions.assertEquals(1, employees.size());
+        Assertions.assertEquals(employeeDBO.getContractStartDate(), employees.get(0).getContractStartDate().getValue());
     }
 
     @Test
     void updateEmployee() {
+        Employee employeeModified = new Employee(
+                new IdentificationId("1234567"),
+                new EmployeeName("Juan"),
+                new ContractStartDate(LocalDate.parse("2020-01-01")),
+                new EmployeePosition("Desarrollador"),
+                new Salary(3000000D),
+                new UpdateEmployDate(LocalDate.parse("2022-01-01")),
+                new EmployeeState(
+                        new StateId(1),
+                        new StateName("Activo")
+                )
+        );
+        Employee updated = this.employeeRepositoryAdapter.updateEmployee(employeeModified);
+
+        Assertions.assertEquals(3000000D, updated.getSalary().getValue());
     }
 
-    @Test
-    void deleteEmployee() {
-    }
 }
