@@ -1,8 +1,6 @@
 package co.com.ias.settlement.infrastructure.entrypoints.salaryhistory.dto;
 
-import co.com.ias.settlement.domain.model.salaryhistory.NewSalary;
 import co.com.ias.settlement.domain.model.salaryhistory.SalaryHistory;
-import co.com.ias.settlement.domain.model.salaryhistory.UpdateSalaryDate;
 import co.com.ias.settlement.infrastructure.entrypoints.employee.dto.EmployeeDTO;
 import co.com.ias.settlement.infrastructure.entrypoints.employeestate.dto.EmployeeStateDTO;
 import co.com.ias.settlement.infrastructure.utils.Constants;
@@ -21,14 +19,6 @@ public class SalaryHistoryDTO {
     private double newSalary;
     private LocalDate updateSalaryDate;
     private EmployeeDTO employee;
-
-    public static SalaryHistory toDomain(SalaryHistoryDTO salaryHistoryDTO) {
-        return new SalaryHistory(
-                new NewSalary(salaryHistoryDTO.getNewSalary()),
-                new UpdateSalaryDate(salaryHistoryDTO.getUpdateSalaryDate()),
-                null
-        );
-    }
 
     public static SalaryHistoryDTO fromDomain(SalaryHistory salaryHistory) {
         return new SalaryHistoryDTO(
