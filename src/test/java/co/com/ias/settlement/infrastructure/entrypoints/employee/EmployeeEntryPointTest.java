@@ -118,7 +118,4 @@ class EmployeeEntryPointTest {
 
     }
 
-    @Test
-    void deleteEmployee() {
-    }
 }

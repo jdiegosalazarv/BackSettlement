@@ -23,12 +23,6 @@ public class SalaryHistoryRepositoryAdapter implements ISalaryHistoryRepository 
     }
 
     @Override
-    public SalaryHistory updateSalaryHistory(SalaryHistory salaryHistory) {
-        SalaryHistoryDBO salaryHistoryDBO = SalaryHistoryDBO.fromDomain(salaryHistory);
-        return SalaryHistoryDBO.toDomain(this.iSalaryHistoryRepositoryAdapter.save(salaryHistoryDBO));
-    }
-
-    @Override
     public List<SalaryHistory> findSalaryHistories() {
         List<SalaryHistoryDBO> salaryHistoryBD = this.iSalaryHistoryRepositoryAdapter.findAll();
         return salaryHistoryBD.stream().map(SalaryHistoryDBO::toDomain).toList();
