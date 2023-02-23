@@ -17,7 +17,6 @@ import java.util.List;
 
 public class SettlementUseCase {
 
-    private static final Integer EMPLOYEE_STATE_ACTIVE = 1;
     private static final Integer EMPLOYEE_STATE_INACTIVE = 2;
     private final ISettlementRepository iSettlementRepository;
     private final IEmployeeRepository iEmployeeRepository;
