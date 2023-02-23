@@ -68,7 +68,7 @@ public class SettlementUseCase {
                 employee.getContractStartDate(),
                 (employee.getEmployeePosition() == null) ? null : employee.getEmployeePosition(),
                 employee.getSalary(),
-                new UpdateEmployDate(LocalDate.now()),
+                new UpdateEmployDate(settlementInfo.getFinalContractDate().getValue()),
                 employeeState
         );
 
